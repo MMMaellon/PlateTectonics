@@ -1,0 +1,24 @@
+{
+    "name": "com.mmmaellon.plate-tectonics",
+    "displayName": "Plate Tectonics",
+    "version": "0.0.1",
+    "description": "",
+    "url": "https://github.com/MMMaellon/PlateTectonics.git",
+    "dependencies": {},
+    "gitDependencies": {},
+    "author": {
+        "name": "MMMaellon",
+        "email": "mmmaellon@gmail.com",
+        "url": "https://twitter.com/MMMaellon"
+    },
+    "vpmDependencies": {
+        "com.vrchat.worlds": "^3.2.0"
+    },
+    "samples": [
+        {
+            "displayName": "Plate Tectonics Example Scene",
+            "description": "An example scene showing off the capabilities of Plate Tectonics.",
+            "path": "Samples~/Example"
+        }
+    ]
+}

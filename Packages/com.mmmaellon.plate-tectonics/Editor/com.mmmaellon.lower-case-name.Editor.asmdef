@@ -1,5 +1,5 @@
 {
-    "name": "com.mmmaellon.lower-case-name.editor",
+    "name": "com.mmmaellon.plate-tectonics.editor",
     "references": [
         "VRC.SDK3",
         "VRC.SDK3.Editor",
@@ -7,7 +7,7 @@
         "VRC.SDKBase.Editor",
         "UdonSharp.Editor",
         "UdonSharp.Runtime",
-        "com.mmmaellon.lower-case-name",
+        "com.mmmaellon.plate-tectonics",
         "UnityEditor.UI",
         "VRC.Udon.Editor"
     ],

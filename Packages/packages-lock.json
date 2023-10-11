@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.mmmaellon.lower-case-name": {
-      "version": "file:com.mmmaellon.lower-case-name",
+    "com.mmmaellon.plate-tectonics": {
+      "version": "file:com.mmmaellon.plate-tectonics",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}

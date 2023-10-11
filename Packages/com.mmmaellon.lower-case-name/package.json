@@ -1,7 +1,7 @@
 {
     "name": "com.mmmaellon.lower-case-name",
     "displayName": "STARDENBURDENHARDENBART",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "",
     "url": "https://github.com/MMMaellon/lower-case-name.git",
     "dependencies": {},
@@ -12,7 +12,7 @@
         "url": "https://twitter.com/MMMaellon"
     },
     "vpmDependencies": {
-        "com.vrchat.udonsharp": "1.1.X"
+        "com.vrchat.worlds": "^3.2.0"
     },
     "samples": [
         {

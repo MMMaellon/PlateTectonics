@@ -1,7 +1,7 @@
 {
     "name": "com.mmmaellon.plate-tectonics",
     "displayName": "Plate Tectonics",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "",
     "url": "https://github.com/MMMaellon/PlateTectonics.git",
     "dependencies": {},
@@ -12,7 +12,8 @@
         "url": "https://twitter.com/MMMaellon"
     },
     "vpmDependencies": {
-        "com.vrchat.worlds": "^3.2.0"
+        "com.vrchat.worlds": "^3.2.0",
+        "com.cyan.playerobjectpool": "^1.1.2"
     },
     "samples": [
         {

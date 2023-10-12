@@ -6,7 +6,10 @@
     "VRC.Udon",
     "UdonSharp.Runtime",
     "UdonSharp.Editor",
-    "Unity.TextMeshPro"
+    "Unity.TextMeshPro",
+    "Cyan.PlayerObjectPool",
+    "Cyan.PlayerObjectPool.Editor",
+    "Cyan.PlayerObjectPool.UdonSharp"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

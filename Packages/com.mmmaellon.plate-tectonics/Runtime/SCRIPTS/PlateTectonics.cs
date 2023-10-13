@@ -11,21 +11,22 @@ namespace MMMaellon
     public class PlateTectonics : CyanPlayerObjectPoolEventListener
     {
         public TectonicPlate startingPlate;
+        public bool keepWorldStatic = false;
         public bool resetOnRespawn = true;
         Vector3 plateLockPosition;
         Quaternion plateLockRotation;
 
-        [FieldChangeCallback(nameof(moveWorld))]
-        bool _moveWorld = false;
-        public bool moveWorld
+        [FieldChangeCallback(nameof(plateActive))]
+        bool _plateActive = false;
+        public bool plateActive
         {
-            get => _moveWorld;
+            get => _plateActive;
             set
             {
                 if (Utilities.IsValid(localPlayer))
                 {
-                    _moveWorld = value && Utilities.IsValid(localPlayer.parentTransform);
-                    if (_moveWorld)
+                    _plateActive = value && Utilities.IsValid(localPlayer.parentTransform);
+                    if (_plateActive)
                     {
                         plateLockPosition = localPlayer.parentTransform.position;
                         plateLockRotation = localPlayer.parentTransform.rotation;
@@ -52,7 +53,7 @@ namespace MMMaellon
             }
             else
             {
-                moveWorld = false;
+                plateActive = false;
             }
         }
 
@@ -82,11 +83,9 @@ namespace MMMaellon
         }
 
         Quaternion rotationalDiff;
-        Vector3 axis;
-        float angle;
         public void Update()
         {
-            if (!moveWorld || !Utilities.IsValid(localPlayer) || !Utilities.IsValid(localPlayer.parentTransform))
+            if (!plateActive || !Utilities.IsValid(localPlayer) || !Utilities.IsValid(localPlayer.parentTransform))
             {
                 return;
             }

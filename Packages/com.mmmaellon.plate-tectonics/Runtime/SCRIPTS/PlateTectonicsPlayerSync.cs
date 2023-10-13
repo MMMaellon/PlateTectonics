@@ -103,7 +103,7 @@ namespace MMMaellon
                 transform.SetParent(value, true);
                 if (Utilities.IsValid(plateTectonics))
                 {
-                    plateTectonics.moveWorld = Utilities.IsValid(transform.parent);
+                    plateTectonics.plateActive = Utilities.IsValid(transform.parent);
                 }
                 if (Utilities.IsValid(Owner))
                 {

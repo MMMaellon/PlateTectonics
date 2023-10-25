@@ -5,6 +5,7 @@ using VRC.SDKBase;
 using VRC.Udon;
 using Cyan.PlayerObjectPool;
 using TMPro;
+using System.Net;
 
 namespace MMMaellon
 {
@@ -13,6 +14,7 @@ namespace MMMaellon
     {
         public PlateTectonicsPlayerAttachment attachment;
         public VRCStation chair;
+        bool dirty;
         public float networkUpdateInterval = 0.25f;
         [System.NonSerialized]
         bool local = false;
@@ -79,9 +81,9 @@ namespace MMMaellon
                 _localRotation = value;
                 value.ToAngleAxis(out rotationAngle, out rotationVector);
                 rotationVector *= 50f * rotationAngle;
-                _localRotationX = (short) Mathf.Clamp(rotationVector.x, -32000, 32000);
-                _localRotationY = (short) Mathf.Clamp(rotationVector.y, -32000, 32000);
-                _localRotationZ = (short) Mathf.Clamp(rotationVector.z, -32000, 32000);
+                _localRotationX = (short) Mathf.Clamp(System.Single.IsNaN(rotationVector.x) ? 0 : rotationVector.x, -32000, 32000);
+                _localRotationY = (short) Mathf.Clamp(System.Single.IsNaN(rotationVector.y) ? 0 : rotationVector.y, -32000, 32000);
+                _localRotationZ = (short) Mathf.Clamp(System.Single.IsNaN(rotationVector.z) ? 0 : rotationVector.z, -32000, 32000);
             }
         }
         [System.NonSerialized]
@@ -89,12 +91,16 @@ namespace MMMaellon
         float velDiff;
         [System.NonSerialized, UdonSynced, FieldChangeCallback(nameof(velocity))]
         public Vector3 _velocity;
+        bool velocityChanged = false;
+        Vector3 lastVel;
         public Vector3 velocity
         {
             get => _velocity;
             set
             {
+                lastVel = _velocity;
                 _velocity = value;
+                velocityChanged = true;
                 // if (local)
                 // {
                 //     velDiff = Vector3.Distance(_velocity, value);
@@ -116,12 +122,17 @@ namespace MMMaellon
         }
         Transform lastTransform;
         Vector3 lastLocalPos;
+        Vector3 lastLocalVel;
         Quaternion lastLocalRot;
-        Vector3 calcedVel;
-        bool firstFrame;
+        Vector3 nextGlobalPos;
+        Vector3 lastGlobalPos;
+        Vector3 lastGlobalRot;
+        Vector3 lastGlobalVel;
+        bool lastGrounded;
         Vector3 startPos;
         Vector3 startVel;
         Vector3 endPos;
+        Vector3 endVel;
         Quaternion startRot;
         Quaternion endRot;
         public void Update()
@@ -147,36 +158,92 @@ namespace MMMaellon
                 // transform.localRotation = Quaternion.Slerp(transform.localRotation, localRotation, 0.1f);
                 // localPosition = attachment.parentTransform.InverseTransformPoint(transform.position);
                 // localRotation = Quaternion.Inverse(attachment.parentTransform.rotation) * transform.rotation;
-                if (Utilities.IsValid(attachment.parentTransform))
+                // if (Utilities.IsValid(attachment.parentTransform))
+                // {
+                //     if (lastTransform == attachment.parentTransform)
+                //     {
+                //         // transform.position = Vector3.Lerp(attachment.parentTransform.position + attachment.parentTransform.rotation * lastLocalPos, attachment.parentTransform.position + attachment.parentTransform.rotation * (localPosition + velocity * (Time.timeSinceLevelLoad - syncTime)), 0.1f);
+                //         if (lastGrounded)
+                //         {
+                //             transform.position = Vector3.Lerp(transform.position, attachment.parentTransform.position + attachment.parentTransform.rotation * localPosition, 0.1f);
+                //             transform.rotation = Quaternion.Slerp(transform.rotation, attachment.parentTransform.rotation * localRotation, 0.1f);
+                //         } else {
+                //             transform.position = Vector3.Lerp(attachment.parentTransform.position + attachment.parentTransform.rotation * lastLocalPos, attachment.parentTransform.position + attachment.parentTransform.rotation * localPosition, 0.1f);
+                //             transform.rotation = Quaternion.Slerp(attachment.parentTransform.rotation * lastLocalRot, attachment.parentTransform.rotation * localRotation, 0.1f);
+                //         }
+                //         lastLocalPos = Quaternion.Inverse(attachment.parentTransform.rotation) * (transform.position - attachment.parentTransform.position);
+                //         lastLocalRot = Quaternion.Inverse(attachment.parentTransform.rotation) * transform.rotation;
+                //         lastGrounded = true;
+                //     }
+                //     else
+                //     {
+                //         // transform.position = Vector3.Lerp(transform.position, attachment.parentTransform.position + attachment.parentTransform.rotation * (localPosition + velocity * (Time.timeSinceLevelLoad - syncTime)), 0.1f);
+                //         transform.position = Vector3.Lerp(transform.position, attachment.parentTransform.position + attachment.parentTransform.rotation * localPosition, 0.1f);
+                //         transform.rotation = Quaternion.Slerp(transform.rotation, attachment.parentTransform.rotation * localRotation, 0.1f);
+                //         lastGrounded = false;
+                //     }
+                //     lastTransform = attachment.parentTransform;
+                // } else
+                // {
+                //     transform.position = Vector3.Lerp(transform.position, localPosition + _velocity * (Time.timeSinceLevelLoad - syncTime), 0.1f);
+                //     transform.rotation = Quaternion.Slerp(transform.rotation, localRotation, 0.1f);
+                //     lastTransform = null;
+                // }
+                if (lastTransform == attachment.parentTransform && !velocityChanged)
                 {
-                    if (lastTransform == attachment.parentTransform)
+                    //continue doing what we did last frame since we have the same parentTransform
+                    if (Utilities.IsValid(attachment.parentTransform))
                     {
-                        // transform.position = Vector3.Lerp(attachment.parentTransform.position + attachment.parentTransform.rotation * lastLocalPos, attachment.parentTransform.position + attachment.parentTransform.rotation * (localPosition + velocity * (Time.timeSinceLevelLoad - syncTime)), 0.1f);
-                        if (firstFrame)
-                        {
-                            transform.position = Vector3.Lerp(transform.position, attachment.parentTransform.position + attachment.parentTransform.rotation * localPosition, 0.1f);
-                            transform.rotation = Quaternion.Slerp(transform.rotation, attachment.parentTransform.rotation * localRotation, 0.1f);
-                        } else {
-                            transform.position = Vector3.Lerp(attachment.parentTransform.position + attachment.parentTransform.rotation * lastLocalPos, attachment.parentTransform.position + attachment.parentTransform.rotation * localPosition, 0.1f);
-                            transform.rotation = Quaternion.Slerp(attachment.parentTransform.rotation * lastLocalRot, attachment.parentTransform.rotation * localRotation, 0.1f);
-                        }
-                        lastLocalPos = Quaternion.Inverse(attachment.parentTransform.rotation) * (transform.position - attachment.parentTransform.position);
-                        lastLocalRot = Quaternion.Inverse(attachment.parentTransform.rotation) * transform.rotation;
+                        startPos = attachment.parentTransform.position + attachment.parentTransform.rotation * lastLocalPos;
+                        startRot = attachment.parentTransform.rotation * lastLocalRot;
+                        startVel = attachment.parentTransform.rotation * lastLocalVel;
+                        endPos = attachment.parentTransform.position + attachment.parentTransform.rotation * localPosition;
+                        endRot = attachment.parentTransform.rotation * localRotation;
+                        endVel = attachment.parentTransform.rotation * _velocity;
                     }
                     else
                     {
-                        // transform.position = Vector3.Lerp(transform.position, attachment.parentTransform.position + attachment.parentTransform.rotation * (localPosition + velocity * (Time.timeSinceLevelLoad - syncTime)), 0.1f);
-                        transform.position = Vector3.Lerp(transform.position, attachment.parentTransform.position + attachment.parentTransform.rotation * localPosition, 0.1f);
-                        transform.rotation = Quaternion.Slerp(transform.rotation, attachment.parentTransform.rotation * localRotation, 0.1f);
-                        firstFrame = true;
+                        //we don't even need to update every frame
                     }
-                    lastTransform = attachment.parentTransform;
-                } else
-                {
-                    transform.position = Vector3.Lerp(transform.position, localPosition + _velocity * (Time.timeSinceLevelLoad - syncTime), 0.1f);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, localRotation, 0.1f);
-                    lastTransform = null;
                 }
+                else
+                {
+                    //something changed
+                    if (Utilities.IsValid(attachment.parentTransform))
+                    {
+                        startPos = transform.position;
+                        startRot = transform.rotation;
+                        startVel = lastGlobalVel;
+                        lastLocalPos = Quaternion.Inverse(attachment.parentTransform.rotation) * (transform.position - attachment.parentTransform.position);
+                        if (lastTransform == attachment.parentTransform)
+                        {
+                            lastLocalVel = lastVel;
+                        }
+                        else
+                        {
+                            lastLocalVel = Quaternion.Inverse(attachment.parentTransform.rotation) * lastGlobalVel;
+                        }
+                        lastLocalRot = Quaternion.Inverse(attachment.parentTransform.rotation) * transform.rotation;
+                        endPos = attachment.parentTransform.position + attachment.parentTransform.rotation * localPosition;
+                        endRot = attachment.parentTransform.rotation * localRotation;
+                        endVel = attachment.parentTransform.rotation * _velocity;
+                    }
+                    else
+                    {
+                        startPos = transform.position;
+                        startRot = transform.rotation;
+                        startVel = lastGlobalVel;
+                        endPos = localPosition;
+                        endRot = localRotation;
+                        endVel = _velocity;
+                    }
+                }
+                // nextGlobalPos = HermiteInterpolatePosition(startPos, startVel, endPos, endVel);
+                nextGlobalPos = Vector3.Lerp(startPos, endPos, interpolation);
+                lastGlobalVel = (nextGlobalPos - transform.position) / Time.deltaTime;
+                transform.position = nextGlobalPos;
+                transform.rotation = Quaternion.Slerp(startRot, endRot, interpolation);
+                velocityChanged = false;
             }
         }
 
@@ -199,7 +266,7 @@ namespace MMMaellon
 
         public void SitInChairDelayed()
         {
-            SendCustomEventDelayedFrames(nameof(SitInChair), 1, VRC.Udon.Common.Enums.EventTiming.Update);
+            SendCustomEventDelayedFrames(nameof(SitInChair), 3, VRC.Udon.Common.Enums.EventTiming.Update);
         }
 
         public string GetFullPath(Transform target)
@@ -252,7 +319,8 @@ namespace MMMaellon
         {
             get
             {
-                return lagTime <= 0 ? 1 : Mathf.Lerp(0, 1, (Time.timeSinceLevelLoad - syncTime) / lagTime);
+                // return lagTime <= 0 ? 1 : Mathf.Lerp(0, 1, (Time.timeSinceLevelLoad - syncTime) / lagTime);
+                return Mathf.Clamp01((Time.timeSinceLevelLoad - syncTime) / (networkUpdateInterval * 2));
             }
         }
         public Vector3 HermiteInterpolatePosition(Vector3 startPos, Vector3 startVel, Vector3 endPos, Vector3 endVel)

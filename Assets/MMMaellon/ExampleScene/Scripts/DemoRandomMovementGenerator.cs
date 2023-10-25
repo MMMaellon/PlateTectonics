@@ -80,9 +80,6 @@ public class DemoRandomMovementGenerator : UdonSharpBehaviour
     float lastAngle = -1001f;
     float currAngle = -1001f;
     public float randomRange = 20f;
-
-    bool firstFrameAfterMove = true;
-    bool turning = false;
     public void Update()
     {
         if (!Utilities.IsValid(Networking.LocalPlayer))

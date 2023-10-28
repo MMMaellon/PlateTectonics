@@ -6,6 +6,7 @@ using VRC.Udon;
 using Cyan.PlayerObjectPool;
 using TMPro;
 using System.Net;
+using UnityEngine.UIElements;
 
 namespace MMMaellon
 {
@@ -14,28 +15,77 @@ namespace MMMaellon
     {
         public PlateTectonicsPlayerAttachment attachment;
         public VRCStation chair;
-        bool dirty;
-        public float networkUpdateInterval = 0.25f;
+        [System.NonSerialized]
+        public bool needSync;
+        public float networkUpdateInterval = 0.33333333333333333f;
         [System.NonSerialized]
         bool local = false;
         [System.NonSerialized]
         public Vector3 _lastSyncedPos;
         [System.NonSerialized]
         public Quaternion _lastSyncedRot;
+        [System.NonSerialized]
+        public Vector3 _lastSyncedVel;
         public override void OnPreSerialization()
         {
-            _lastSyncedPos = _localPosition;
-            _lastSyncedRot = _localRotation;
+            RequestSerialization();
+            _syncedPos = _localPosition;
+            _syncedRot = _localRotation;
+            _syncedVel = _velocity;
             if (Utilities.IsValid(attachment.plateTectonics))
             {
                 attachment.plateTectonics.moved = false;
                 attachment.plateTectonics.landedChanged = false;
             }
+            attachment.transform.position = transform.position;
             syncTime = Time.timeSinceLevelLoad;
+            needSync = false;
+            updateCounter++;
         }
+        Transform _syncedTransform;
+        [System.NonSerialized]
+        public Vector3 _syncedPos;
+        [System.NonSerialized]
+        public Quaternion _syncedRot;
+        [System.NonSerialized]
+        public Vector3 _syncedVel;
+        [System.NonSerialized, UdonSynced]
+        public uint updateCounter = 0;
+        [System.NonSerialized]
+        public uint _syncedUpdateCounter = 0;
         public override void OnDeserialization()
         {
-            syncTime = Time.timeSinceLevelLoad;
+            _syncedUpdateCounter = updateCounter;
+            Debug.LogWarning("Sync OnDeserialization " + updateCounter + ">" + attachment.updateCounter);
+            _localPosition = localPosition;
+            _localRotation = localRotation;
+            if (_syncedUpdateCounter > attachment._syncedUpdateCounter)
+            {
+                JointOnDeserialization();
+            }
+        }
+
+        public void JointOnDeserialization()
+        {
+            Debug.LogWarning("JointOnDeserialization");
+            _syncedPos = _localPosition;
+            _syncedRot = _localRotation;
+            _syncedVel = _velocity;
+            _syncedTransform = attachment.parentTransform;
+            attachment.transform.position = transform.position;
+            if (Utilities.IsValid(_syncedTransform))
+            {
+                _lastSyncedPos = Quaternion.Inverse(_syncedTransform.rotation) * (transform.position - _syncedTransform.position);
+                _lastSyncedRot = Quaternion.Inverse(_syncedTransform.rotation) * transform.rotation;
+                _lastSyncedVel = Quaternion.Inverse(_syncedTransform.rotation) * lastGlobalVel;
+            }
+            else
+            {
+                _lastSyncedPos = transform.position;
+                _lastSyncedRot = transform.rotation;
+                _lastSyncedVel = lastGlobalVel;
+            }
+            syncTime = Time.timeSinceLevelLoad - Time.deltaTime;
         }
         [System.NonSerialized]
         public Vector3 _localPosition;
@@ -91,7 +141,6 @@ namespace MMMaellon
         float velDiff;
         [System.NonSerialized, UdonSynced, FieldChangeCallback(nameof(velocity))]
         public Vector3 _velocity;
-        bool velocityChanged = false;
         Vector3 lastVel;
         public Vector3 velocity
         {
@@ -100,35 +149,10 @@ namespace MMMaellon
             {
                 lastVel = _velocity;
                 _velocity = value;
-                velocityChanged = true;
-                // if (local)
-                // {
-                //     velDiff = Vector3.Distance(_velocity, value);
-                //     if ((value.magnitude < 0.01f && _velocity.magnitude > 0.01f) || velDiff > value.magnitude * 0.05f)
-                //     {
-                //         if (Time.timeSinceLevelLoad - syncTime > networkUpdateInterval || value == Vector3.zero)
-                //         {
-                //             _velocity = value;
-                //             RequestSerialization();
-                //         }
-                //     }
-                // }
-                // else
-                // {
-                //     _velocity = value;
-                //     syncTime = Time.timeSinceLevelLoad;
-                // }
             }
         }
-        Transform lastTransform;
-        Vector3 lastLocalPos;
-        Vector3 lastLocalVel;
-        Quaternion lastLocalRot;
-        Vector3 nextGlobalPos;
-        Vector3 lastGlobalPos;
-        Vector3 lastGlobalRot;
         Vector3 lastGlobalVel;
-        bool lastGrounded;
+        Vector3 nextGlobalPos;
         Vector3 startPos;
         Vector3 startVel;
         Vector3 endPos;
@@ -139,111 +163,37 @@ namespace MMMaellon
         {
             if (local)
             {
-                // RecordTransforms();
-                // if (Utilities.IsValid(parentTransform))
-                // {
-                //     velocity = Quaternion.Inverse(parentTransform.rotation) * Owner.GetVelocity();
-                // }
-                // else
-                // {
-                //     velocity = Owner.GetVelocity();
-                // }
-                // transform.localPosition = localPosition;
-                // transform.localRotation = localRotation;
+                if (syncTime + networkUpdateInterval < Time.timeSinceLevelLoad && needSync)
+                {
+                    RequestSerialization();
+                    needSync = false;
+                }
             }
-            else
+                else
             {
                 Physics.SyncTransforms();
-                // transform.localPosition = Vector3.Lerp(transform.localPosition, localPosition + _velocity * (Time.timeSinceLevelLoad - syncTime), 0.1f);
-                // transform.localRotation = Quaternion.Slerp(transform.localRotation, localRotation, 0.1f);
-                // localPosition = attachment.parentTransform.InverseTransformPoint(transform.position);
-                // localRotation = Quaternion.Inverse(attachment.parentTransform.rotation) * transform.rotation;
-                // if (Utilities.IsValid(attachment.parentTransform))
-                // {
-                //     if (lastTransform == attachment.parentTransform)
-                //     {
-                //         // transform.position = Vector3.Lerp(attachment.parentTransform.position + attachment.parentTransform.rotation * lastLocalPos, attachment.parentTransform.position + attachment.parentTransform.rotation * (localPosition + velocity * (Time.timeSinceLevelLoad - syncTime)), 0.1f);
-                //         if (lastGrounded)
-                //         {
-                //             transform.position = Vector3.Lerp(transform.position, attachment.parentTransform.position + attachment.parentTransform.rotation * localPosition, 0.1f);
-                //             transform.rotation = Quaternion.Slerp(transform.rotation, attachment.parentTransform.rotation * localRotation, 0.1f);
-                //         } else {
-                //             transform.position = Vector3.Lerp(attachment.parentTransform.position + attachment.parentTransform.rotation * lastLocalPos, attachment.parentTransform.position + attachment.parentTransform.rotation * localPosition, 0.1f);
-                //             transform.rotation = Quaternion.Slerp(attachment.parentTransform.rotation * lastLocalRot, attachment.parentTransform.rotation * localRotation, 0.1f);
-                //         }
-                //         lastLocalPos = Quaternion.Inverse(attachment.parentTransform.rotation) * (transform.position - attachment.parentTransform.position);
-                //         lastLocalRot = Quaternion.Inverse(attachment.parentTransform.rotation) * transform.rotation;
-                //         lastGrounded = true;
-                //     }
-                //     else
-                //     {
-                //         // transform.position = Vector3.Lerp(transform.position, attachment.parentTransform.position + attachment.parentTransform.rotation * (localPosition + velocity * (Time.timeSinceLevelLoad - syncTime)), 0.1f);
-                //         transform.position = Vector3.Lerp(transform.position, attachment.parentTransform.position + attachment.parentTransform.rotation * localPosition, 0.1f);
-                //         transform.rotation = Quaternion.Slerp(transform.rotation, attachment.parentTransform.rotation * localRotation, 0.1f);
-                //         lastGrounded = false;
-                //     }
-                //     lastTransform = attachment.parentTransform;
-                // } else
-                // {
-                //     transform.position = Vector3.Lerp(transform.position, localPosition + _velocity * (Time.timeSinceLevelLoad - syncTime), 0.1f);
-                //     transform.rotation = Quaternion.Slerp(transform.rotation, localRotation, 0.1f);
-                //     lastTransform = null;
-                // }
-                if (lastTransform == attachment.parentTransform && !velocityChanged)
+                if (Utilities.IsValid(_syncedTransform))
                 {
-                    //continue doing what we did last frame since we have the same parentTransform
-                    if (Utilities.IsValid(attachment.parentTransform))
-                    {
-                        startPos = attachment.parentTransform.position + attachment.parentTransform.rotation * lastLocalPos;
-                        startRot = attachment.parentTransform.rotation * lastLocalRot;
-                        startVel = attachment.parentTransform.rotation * lastLocalVel;
-                        endPos = attachment.parentTransform.position + attachment.parentTransform.rotation * localPosition;
-                        endRot = attachment.parentTransform.rotation * localRotation;
-                        endVel = attachment.parentTransform.rotation * _velocity;
-                    }
-                    else
-                    {
-                        //we don't even need to update every frame
-                    }
+                    startPos = _syncedTransform.position + _syncedTransform.rotation * _lastSyncedPos;
+                    startRot = _syncedTransform.rotation * _lastSyncedRot;
+                    startVel = _syncedTransform.rotation * _lastSyncedVel;
+                    endPos = _syncedTransform.position + _syncedTransform.rotation * _syncedPos;
+                    endRot = _syncedTransform.rotation * _syncedRot;
+                    endVel = _syncedTransform.rotation * _syncedVel;
                 }
                 else
                 {
-                    //something changed
-                    if (Utilities.IsValid(attachment.parentTransform))
-                    {
-                        startPos = transform.position;
-                        startRot = transform.rotation;
-                        startVel = lastGlobalVel;
-                        lastLocalPos = Quaternion.Inverse(attachment.parentTransform.rotation) * (transform.position - attachment.parentTransform.position);
-                        if (lastTransform == attachment.parentTransform)
-                        {
-                            lastLocalVel = lastVel;
-                        }
-                        else
-                        {
-                            lastLocalVel = Quaternion.Inverse(attachment.parentTransform.rotation) * lastGlobalVel;
-                        }
-                        lastLocalRot = Quaternion.Inverse(attachment.parentTransform.rotation) * transform.rotation;
-                        endPos = attachment.parentTransform.position + attachment.parentTransform.rotation * localPosition;
-                        endRot = attachment.parentTransform.rotation * localRotation;
-                        endVel = attachment.parentTransform.rotation * _velocity;
-                    }
-                    else
-                    {
-                        startPos = transform.position;
-                        startRot = transform.rotation;
-                        startVel = lastGlobalVel;
-                        endPos = localPosition;
-                        endRot = localRotation;
-                        endVel = _velocity;
-                    }
+                    startPos = _lastSyncedPos;
+                    startRot = _lastSyncedRot;
+                    startVel = _lastSyncedVel;
+                    endPos = _syncedPos;
+                    endRot = _syncedRot;
+                    endVel = _syncedVel;
                 }
-                // nextGlobalPos = HermiteInterpolatePosition(startPos, startVel, endPos, endVel);
-                nextGlobalPos = Vector3.Lerp(startPos, endPos, interpolation);
+                nextGlobalPos = HermiteInterpolatePosition(startPos, startVel, endPos, endVel);
                 lastGlobalVel = (nextGlobalPos - transform.position) / Time.deltaTime;
                 transform.position = nextGlobalPos;
                 transform.rotation = Quaternion.Slerp(startRot, endRot, interpolation);
-                velocityChanged = false;
             }
         }
 
@@ -266,7 +216,8 @@ namespace MMMaellon
 
         public void SitInChairDelayed()
         {
-            SendCustomEventDelayedFrames(nameof(SitInChair), 3, VRC.Udon.Common.Enums.EventTiming.Update);
+            transform.position = Networking.LocalPlayer.GetPosition();
+            SendCustomEventDelayedFrames(nameof(SitInChair), 1, VRC.Udon.Common.Enums.EventTiming.Update);
         }
 
         public string GetFullPath(Transform target)
@@ -281,21 +232,21 @@ namespace MMMaellon
             return tempName;
         }
 
-        public void RecordTransforms()
-        {
-            if (Utilities.IsValid(attachment.parentTransform))
-            {
-                // localPosition = attachment.parentTransform.InverseTransformPoint(transform.position);
-                // localRotation = Quaternion.Inverse(attachment.parentTransform.rotation) * transform.rotation;
-                localPosition = Quaternion.Inverse(attachment.parentTransform.rotation) * (transform.position - attachment.parentTransform.position);
-                localRotation = Quaternion.Inverse(attachment.parentTransform.rotation) * transform.rotation;
-            }
-            else
-            {
-                localPosition = transform.position;
-                localRotation = transform.rotation;
-            }
-        }
+        // public void RecordTransforms()
+        // {
+        //     if (Utilities.IsValid(attachment.parentTransform))
+        //     {
+        //         // localPosition = attachment.parentTransform.InverseTransformPoint(transform.position);
+        //         // localRotation = Quaternion.Inverse(attachment.parentTransform.rotation) * transform.rotation;
+        //         localPosition = Quaternion.Inverse(attachment.parentTransform.rotation) * (transform.position - attachment.parentTransform.position);
+        //         localRotation = Quaternion.Inverse(attachment.parentTransform.rotation) * transform.rotation;
+        //     }
+        //     else
+        //     {
+        //         localPosition = transform.position;
+        //         localRotation = transform.rotation;
+        //     }
+        // }
 
         public void SitInChair()
         {
@@ -307,7 +258,7 @@ namespace MMMaellon
 #if !UNITY_EDITOR
         public float lagTime
         {
-            get => Time.realtimeSinceStartup - Networking.SimulationTime(gameObject);
+            get => Mathf.Max(networkUpdateInterval, Time.realtimeSinceStartup - Networking.SimulationTime(gameObject));
         }
 #else
         public float lagTime
@@ -320,14 +271,33 @@ namespace MMMaellon
             get
             {
                 // return lagTime <= 0 ? 1 : Mathf.Lerp(0, 1, (Time.timeSinceLevelLoad - syncTime) / lagTime);
-                return Mathf.Clamp01((Time.timeSinceLevelLoad - syncTime) / (networkUpdateInterval * 2));
+                return Mathf.Clamp((Time.timeSinceLevelLoad - syncTime) / networkUpdateInterval, 0, 100) / 1.5f;//the 1.5f makes it smoother and gives us room for 
             }
         }
         public Vector3 HermiteInterpolatePosition(Vector3 startPos, Vector3 startVel, Vector3 endPos, Vector3 endVel)
         {//Shout out to Kit Kat for suggesting the improved hermite interpolation
-            posControl1 = startPos + startVel * lagTime * interpolation / 3f;
-            posControl2 = endPos - endVel * lagTime * (1.0f - interpolation) / 3f;
-            return Vector3.Lerp(Vector3.Lerp(posControl1, endPos, interpolation), Vector3.Lerp(startPos, posControl2, interpolation), interpolation);
+            if (Utilities.IsValid(_syncedTransform))
+            {
+                if (interpolation < 1)
+                {
+                    posControl1 = startPos + _syncedTransform.rotation * startVel * lagTime * interpolation / 3f;
+                    posControl2 = endPos - _syncedTransform.rotation * endVel * lagTime * (1.0f - interpolation) / 3f;
+                    return Vector3.Lerp(Vector3.Lerp(posControl1, endPos, interpolation), Vector3.Lerp(startPos, posControl2, interpolation), interpolation);
+                    // return Vector3.Lerp(startPos, endPos, interpolation);
+                }
+                return endPos + _syncedTransform.rotation * endVel * lagTime * (interpolation - 1);
+            }
+            else
+            {
+                if (interpolation < 1)
+                {
+                    posControl1 = startPos + startVel * lagTime * interpolation / 3f;
+                    posControl2 = endPos - endVel * lagTime * (1.0f - interpolation) / 3f;
+                    return Vector3.Lerp(Vector3.Lerp(posControl1, endPos, interpolation), Vector3.Lerp(startPos, posControl2, interpolation), interpolation);
+                    // return Vector3.Lerp(startPos, endPos, interpolation);
+                }
+                return endPos + endVel * lagTime * (interpolation - 1);
+            }
         }
     }
 }

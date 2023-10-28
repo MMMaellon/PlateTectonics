@@ -1,6 +1,7 @@
 ﻿
 using UdonSharp;
 using UnityEngine;
+using UnityEngine.Diagnostics;
 using VRC.SDKBase;
 using VRC.Udon;
 
@@ -9,6 +10,19 @@ namespace MMMaellon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class PlateTectonicsPlayerAttachment : UdonSharpBehaviour
     {
+        [System.NonSerialized, UdonSynced]
+        public uint updateCounter = 0;
+        [System.NonSerialized]
+        public uint _syncedUpdateCounter = 0;
+        public override void OnDeserialization()
+        {
+            _syncedUpdateCounter = updateCounter;
+            Debug.LogWarning("attachment OnDeserialization " + sync.updateCounter + ">" + updateCounter);
+            if (sync._syncedUpdateCounter > _syncedUpdateCounter)
+            {
+                sync.JointOnDeserialization();
+            }
+        }
 
         [System.NonSerialized]
         public PlateTectonics plateTectonics;
@@ -22,9 +36,11 @@ namespace MMMaellon
             set
             {
                 _parentTransform = value;
-                if (Networking.LocalPlayer.IsOwner(gameObject))
+                transform.position = sync.transform.position;
+                transform.SetParent(value, true);
+                if (Utilities.IsValid(Networking.LocalPlayer) && Networking.LocalPlayer.IsOwner(gameObject))
                 {
-                    // plateTectonics.transform.SetParent(value, true);
+                    updateCounter = sync.updateCounter;
                     plateTectonics.RecordTransforms();
                     RequestSerialization();
                 }

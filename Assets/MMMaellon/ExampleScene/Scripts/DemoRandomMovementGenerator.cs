@@ -37,26 +37,32 @@ public class DemoRandomMovementGenerator : UdonSharpBehaviour
     Vector3 _targetPos = Vector3.zero;
     [UdonSynced, FieldChangeCallback(nameof(startPos))]
     Vector3 _startPos = Vector3.zero;
+    bool startPosSet = false;
     public Vector3 startPos
     {
         get => _startPos;
         set
         {
             _startPos = value;
-            if(!Networking.LocalPlayer.IsOwner(gameObject)){
+            if(!Networking.LocalPlayer.IsOwner(gameObject) && !startPosSet)
+            {
+                startPosSet = true;
                 transform.position = value;
             }
         }
     }
     [UdonSynced, FieldChangeCallback(nameof(startRot))]
     Quaternion _startRot;
+    bool startRotSet = false;
     public Quaternion startRot
     {
         get => _startRot;
         set
         {
             _startRot = value;
-            if(!Networking.LocalPlayer.IsOwner(gameObject)){
+            if(!Networking.LocalPlayer.IsOwner(gameObject) && !startRotSet)
+            {
+                startRotSet = true;
                 transform.rotation = value;
             }
         }
@@ -69,6 +75,7 @@ public class DemoRandomMovementGenerator : UdonSharpBehaviour
             _targetPos = value;
             lastDistance = -1001f;
             lastAngle = -1001f;
+            lastTargetSwitch = Time.timeSinceLevelLoad;
             if (Utilities.IsValid(debugObj))
             {
                 debugObj.transform.position = value;
@@ -80,6 +87,8 @@ public class DemoRandomMovementGenerator : UdonSharpBehaviour
     float lastAngle = -1001f;
     float currAngle = -1001f;
     public float randomRange = 20f;
+    Vector3 acceleration;
+    Vector3 angularAcceleration;
     public void Update()
     {
         if (!Utilities.IsValid(Networking.LocalPlayer))
@@ -88,9 +97,18 @@ public class DemoRandomMovementGenerator : UdonSharpBehaviour
         }
         currDistance = Vector3.Distance(transform.parent.TransformPoint(targetPos), transform.position);
         currAngle = Vector3.SignedAngle(Vector3.forward, transform.InverseTransformPoint(transform.parent.TransformPoint(targetPos)), Vector3.up);
-
-        rigid.velocity += Vector3.Lerp(Vector3.zero, transform.rotation * Vector3.forward * 3 * Mathf.Clamp(currDistance / 5f, 1f, 5), (15 - currAngle) / 15) * Time.deltaTime;
-        rigid.angularVelocity += (Vector3.up * Mathf.Lerp(-1f, 1f, Mathf.Pow(currAngle / 180f * 8, 3) + 0.5f) - rigid.angularVelocity * Mathf.Clamp(currAngle / 15, 1, 3)) * Time.deltaTime;
+        if (lastTargetSwitch + 2f > Time.timeSinceLevelLoad)
+        {
+            acceleration = Vector3.zero;
+            angularAcceleration = Vector3.zero;
+        }
+        else
+        {
+            acceleration = Mathf.Clamp01(Time.timeSinceLevelLoad - (lastTargetSwitch + 2f)) * (transform.rotation * Vector3.forward * Mathf.Pow((45f - Mathf.Clamp(Mathf.Abs(currAngle), 0, 45)) / 45f, 2) * Mathf.Clamp(currDistance / 3, 0, 15) * 5 - rigid.velocity * 2) * Time.deltaTime;
+            angularAcceleration = Mathf.Clamp01(Time.timeSinceLevelLoad - (lastTargetSwitch + 2f)) * (Vector3.up * Mathf.Lerp(-1f, 1f, Mathf.Pow(currAngle / 180f * 8, 3) + 0.5f) * 2 - rigid.angularVelocity * 5) * Time.deltaTime;
+        }
+        rigid.velocity += acceleration;
+        rigid.angularVelocity += angularAcceleration;
 
         if (Networking.LocalPlayer.IsOwner(gameObject) && lastDistance > 0 && currDistance < 5f)
         {
@@ -101,6 +119,7 @@ public class DemoRandomMovementGenerator : UdonSharpBehaviour
         startPos = transform.position;
         startRot = transform.rotation;
     }
+    float lastTargetSwitch;
     public void SetNewTarget()
     {
         targetPos = new Vector3(Random.Range(-randomRange, randomRange), transform.position.y, Random.Range(-randomRange, randomRange));

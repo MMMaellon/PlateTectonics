@@ -68,7 +68,7 @@ namespace MMMaellon
                 if (!Utilities.IsValid(value) || value == "")
                 {
                     _parentTransformName = "";
-                    parentTransform = Utilities.IsValid(plateTectonics) ? plateTectonics.transform : null;
+                    parentTransform = null;
                     return;
                 }
                 GameObject parentObj = GameObject.Find(value);

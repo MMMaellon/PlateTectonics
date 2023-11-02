@@ -221,6 +221,10 @@ namespace MMMaellon
                 lastGrounded = Time.timeSinceLevelLoad;
             }
             coyoteGrounded = (character.isGrounded || (coyoteGrounded && (lastGrounded + coyoteTime > Time.timeSinceLevelLoad) && !jump)) && !parentTransformChanged;
+            if (useGlobalTransformsWhileInAir && !coyoteGrounded && lastGrounded + coyoteTime <= Time.timeSinceLevelLoad && attachment.parentTransformName != "")
+            {
+                attachment.parentTransformName = "";
+            }
 
             if (coyoteGrounded && !parentTransformChanged)
             {
@@ -391,14 +395,14 @@ namespace MMMaellon
             }
             localPlayer.attachment.parentTransformName = hitPlate.transformName;
         }
-        public void OnTriggerExit(Collider hit)
-        {
-            if (useGlobalTransformsWhileInAir || !Utilities.IsValid(hit) || !Utilities.IsValid(attachment) || hit.transform != attachment.transform)
-            {
-                return;
-            }
-            attachment.parentTransformName = "";
-        }
+        // public void OnTriggerExit(Collider hit)
+        // {
+        //     if (useGlobalTransformsWhileInAir || !Utilities.IsValid(hit) || !Utilities.IsValid(attachment) || hit.transform != attachment.transform)
+        //     {
+        //         return;
+        //     }
+        //     attachment.parentTransformName = "";
+        // }
 
 
         private Vector2 GetSpeed()

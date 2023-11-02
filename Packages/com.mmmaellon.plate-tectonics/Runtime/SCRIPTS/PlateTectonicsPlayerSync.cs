@@ -168,6 +168,10 @@ namespace MMMaellon
         Quaternion endRot;
         public void Update()
         {
+            if (!Utilities.IsValid(attachment.plateTectonics))
+            {
+                return;
+            }
             if (local)
             {
                 if (syncTime + networkUpdateInterval < Time.timeSinceLevelLoad && needSync && !syncRequested)
@@ -194,7 +198,7 @@ namespace MMMaellon
                 transform.rotation = Quaternion.Slerp(startTransform.rotation, endTransform.rotation, interpolation);
 
                 //force upright
-                if (attachment.plateTectonics.forceUpright)
+                if (attachment.plateTectonics.forceUprightPlayers)
                 {
                     transform.rotation = Quaternion.FromToRotation(transform.rotation * Vector3.up, Vector3.up) * transform.rotation;
                 }

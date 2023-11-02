@@ -14,7 +14,10 @@ namespace MMMaellon
         public CharacterController character;
         public TectonicPlate startingPlate;
 
-        public bool forceUpright = true;
+        public bool forceUprightPlayers = true;
+
+        public bool useGlobalTransformsWhileInAir = true;
+
         VRCPlayerApi localPlayerAPI;
         public void Start()
         {
@@ -333,7 +336,7 @@ namespace MMMaellon
                     transform.localEulerAngles += 1.35f * inputLookX * Vector3.up;
                 }
             }
-            if (forceUpright)
+            if (forceUprightPlayers)
             {
                 transform.rotation = Quaternion.FromToRotation(transform.rotation * Vector3.up, Vector3.up) * transform.rotation;
             }
@@ -387,6 +390,14 @@ namespace MMMaellon
                 return;
             }
             localPlayer.attachment.parentTransformName = hitPlate.transformName;
+        }
+        public void OnTriggerExit(Collider hit)
+        {
+            if (useGlobalTransformsWhileInAir || !Utilities.IsValid(hit) || !Utilities.IsValid(attachment) || hit.transform != attachment.transform)
+            {
+                return;
+            }
+            attachment.parentTransformName = "";
         }
 
 

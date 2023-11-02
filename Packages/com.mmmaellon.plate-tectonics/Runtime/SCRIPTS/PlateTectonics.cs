@@ -13,12 +13,12 @@ namespace MMMaellon
     {
         public CharacterController character;
         public TectonicPlate startingPlate;
+
+        public bool forceUpright = true;
         VRCPlayerApi localPlayerAPI;
-        Vector3 gravity;
         public void Start()
         {
             localPlayerAPI = Networking.LocalPlayer;
-            gravity = Physics.gravity;
         }
 
         public void AttachToStartingPlate()
@@ -29,18 +29,36 @@ namespace MMMaellon
             }
         }
 
+        bool respawn = true;
         public override void OnPlayerRespawn(VRCPlayerApi player)
         {
             if (Utilities.IsValid(player) && player.isLocal && Utilities.IsValid(localPlayer))
             {
-                AttachToStartingPlate();
-                transform.position = localPlayerAPI.GetPosition();
-                transform.rotation = localPlayerAPI.GetRotation();
-                localPlayer.SitInChairDelayed();
+                respawn = true;
+                // _playerRetainedVelocity = Vector3.zero;
+                // transform.position = localPlayerAPI.GetPosition();
+                // transform.rotation = localPlayerAPI.GetRotation();
+                // AttachToStartingPlate();
+                SendCustomEventDelayedFrames(nameof(SitInChairDelayed), 1, VRC.Udon.Common.Enums.EventTiming.LateUpdate);
             }
         }
-
-        Quaternion rotationalDiff;
+        public void SitInChairDelayed()
+        {
+            AttachToStartingPlate();
+            transform.position = localPlayerAPI.GetPosition();
+            transform.rotation = localPlayerAPI.GetRotation();
+            _playerRetainedVelocity = Vector3.zero;
+            SendCustomEventDelayedFrames(nameof(SitInChair), 1, VRC.Udon.Common.Enums.EventTiming.Update);
+        }
+        public void SitInChair()
+        {
+            AttachToStartingPlate();
+            transform.position = localPlayerAPI.GetPosition();
+            transform.rotation = localPlayerAPI.GetRotation();
+            _playerRetainedVelocity = Vector3.zero;
+            localPlayer.chair.UseStation(localPlayerAPI);
+            respawn = false;
+        }
 
         public override void _OnLocalPlayerAssigned()
         {
@@ -69,13 +87,7 @@ namespace MMMaellon
                 localPlayer = tempPlayer;
                 // localPlayer.transform.position = transform.position;
 
-                localPlayer.transform.SetParent(transform, false);
-                localPlayer.transform.localPosition = Vector3.zero;
-                localPlayer.transform.localRotation = Quaternion.identity;
-                localPlayer.SitInChairDelayed();
-                localPlayer.SendCustomEventDelayedSeconds("SitInChairDelayed", 30);//sometimes you don't end up in the chair, so let's auto retry in 30 seconds
 
-                attachment = localPlayer.attachment;
                 runSpeed = localPlayerAPI.GetRunSpeed();
                 walkSpeed = localPlayerAPI.GetWalkSpeed();
                 strafeSpeed = localPlayerAPI.GetStrafeSpeed();
@@ -84,6 +96,15 @@ namespace MMMaellon
                 localPlayerAPI.SetWalkSpeed(0);
                 localPlayerAPI.SetStrafeSpeed(0);
                 localPlayerAPI.SetJumpImpulse(0);
+
+                localPlayer.transform.SetParent(transform, false);
+                localPlayer.transform.localPosition = Vector3.zero;
+                localPlayer.transform.localRotation = Quaternion.identity;
+                // localPlayer.SitInChairDelayed();
+                // localPlayer.SendCustomEventDelayedSeconds("SitInChairDelayed", 2);//delay to hopefully fix the bug that happens when you get into the chair before your avatar loads
+                SendCustomEventDelayedSeconds(nameof(SitInChair), 1, VRC.Udon.Common.Enums.EventTiming.Update);//1 second delay is arbitrarily picked but it helps fix bugs
+
+                attachment = localPlayer.attachment;
                 AttachToStartingPlate();
             }
         }
@@ -93,10 +114,10 @@ namespace MMMaellon
 
         }
 
-        bool lastJump;
+        bool jump;
         public override void InputJump(bool value, UdonInputEventArgs args)
         {
-            lastJump = value;
+            jump = value;
         }
 
         public override void InputMoveVertical(float value, UdonInputEventArgs args)
@@ -139,10 +160,6 @@ namespace MMMaellon
                     }
                 }
             }
-            else
-            {
-                lookH = value * 360f;
-            }
         }
 
         Vector3 plateInfluence;
@@ -150,7 +167,6 @@ namespace MMMaellon
         Vector3 moveInfluence;
         Vector3 playerForward;
         Quaternion moveRotation;
-        float lastY;
 
         Vector3 _playerRetainedVelocity;
         Vector3 STICK_TO_GROUND_FORCE = new Vector3(0, -2f, 0);
@@ -160,21 +176,22 @@ namespace MMMaellon
         Vector3 maxAc;
         Vector3 minAc;
         Vector3 inputAcceleration;
-        [System.NonSerialized]
-        public bool moved = false;
         bool coyoteGrounded = false;
         float coyoteTime = 0.1f;
         float lastGrounded = 0;
-        Vector3 lastMovePos;
+        Transform lastTransform;
+        bool parentTransformChanged;
+        bool freeMovement;
         public void FixedUpdate()
         {
             //Stolen from client sim
-            if (!Utilities.IsValid(localPlayer))
+            if (!Utilities.IsValid(localPlayer) || respawn)
             {
                 return;
             }
             Physics.SyncTransforms();
             speed = GetSpeed();
+            parentTransformChanged = lastTransform != attachment.parentTransform;
 
             if (localPlayerAPI.IsUserInVR())
             {
@@ -194,36 +211,30 @@ namespace MMMaellon
 
             // Always move along the camera forward as it is the direction that it being aimed at
             moveInfluence = input.y * speed.x * (moveRotation * Vector3.forward) + input.x * speed.y * (moveRotation * Vector3.right);
-            moved = moveInfluence.magnitude > 0;
 
             //calc coyote time
             if (character.isGrounded)
             {
                 lastGrounded = Time.timeSinceLevelLoad;
-                coyoteGrounded = true;
             }
-            else
-            {
-                coyoteGrounded = coyoteGrounded && (lastGrounded + coyoteTime > Time.timeSinceLevelLoad);
-            }
+            coyoteGrounded = (character.isGrounded || (coyoteGrounded && (lastGrounded + coyoteTime > Time.timeSinceLevelLoad) && !jump)) && !parentTransformChanged;
 
-            if (coyoteGrounded)
+            if (coyoteGrounded && !parentTransformChanged)
             {
-                if (lastJump)
+                calcPlateInfluence();
+                _playerRetainedVelocity = moveInfluence + plateInfluence;
+                if (jump)
                 {
-                    _playerRetainedVelocity = moveInfluence;
-                    _playerRetainedVelocity.y = jumpSpeed;
-                    coyoteGrounded = false;
-                    lastJump = false;
+                    _playerRetainedVelocity.y += jumpSpeed;
                 }
-                else
+                else if(character.isGrounded)//ignore coyote time and only stick if actually grounded
                 {
-                    _playerRetainedVelocity = moveInfluence;
+                    _playerRetainedVelocity += STICK_TO_GROUND_FORCE;
                 }
             }
             else
             {
-                moved = true;
+                plateInfluence = Vector3.zero;
                 // Slowly add velocity from movement inputs
                 localVelocity = Quaternion.Inverse(moveRotation) * character.velocity;
                 localVelocity.x = Mathf.Clamp(localVelocity.x, -speed.y, speed.y);
@@ -236,69 +247,57 @@ namespace MMMaellon
                 inputAcceleration.x = Mathf.Clamp(inputAcceleration.x, minAc.x, maxAc.x);
                 inputAcceleration.z = Mathf.Clamp(inputAcceleration.z, minAc.z, maxAc.z);
 
-                inputAcceleration = moveRotation * inputAcceleration;
-                _playerRetainedVelocity += inputAcceleration;
-                _playerRetainedVelocity.y += Time.fixedDeltaTime * Physics.gravity.y;
+                _playerRetainedVelocity += moveRotation * inputAcceleration + Time.fixedDeltaTime * Physics.gravity;
             }
-            calcPlateInfluence();
-            _playerRetainedVelocity += plateInfluence;
-            if (character.isGrounded)//only move downward if we're actually grounded and no in coyote time
+            freeMovement = !coyoteGrounded || moveInfluence.magnitude > 0 || jump || parentTransformChanged || Vector3.Distance(localPlayer._syncedPos, localPlayer.localPosition) > 0.1f;
+            if (freeMovement)
             {
-                _playerRetainedVelocity += STICK_TO_GROUND_FORCE;
-            }
-
-            character.Move(_playerRetainedVelocity * Time.fixedDeltaTime);
-            HandleRotation();
-            RecordTransforms();
-            if (Utilities.IsValid(attachment.parentTransform))
-            {
-                lastGlobalPos = attachment.parentTransform.position + attachment.parentTransform.rotation * localPlayer._localPosition;
-                lastGlobalRot = attachment.parentTransform.rotation * localPlayer._localRotation;
+                character.Move(_playerRetainedVelocity * Time.fixedDeltaTime);
+                localPlayer.endTransform.position = transform.position;
             }
             else
             {
-                lastGlobalPos = transform.position;
-                lastGlobalRot = transform.rotation;
+                // transform.position = localPlayer.endTransform.position;
+                // character.Move(STICK_TO_GROUND_FORCE * Time.fixedDeltaTime);
+                character.Move(_playerRetainedVelocity * Time.fixedDeltaTime);
+                if (Vector3.Distance(localPlayer.endTransform.position, transform.position) > 0.001f)//stops random slipping
+                {
+                    localPlayer.endTransform.position = transform.position;
+                }
             }
+            HandleRotation();
+            RecordTransforms();
+            lastGlobalPos = localPlayer.endTransform.position;
+            lastGlobalRot = localPlayer.endTransform.rotation;
+            // jump = false;
+            lastTransform = attachment.parentTransform;
         }
-
-        // public void LateUpdate()
-        // {
-        //     if (!moved && Utilities.IsValid(attachment) && Utilities.IsValid(attachment.parentTransform))// && !localPlayer.needSync)
-        //     {
-        //         transform.position = attachment.transform.position;
-        //     }
-        // }
 
         Vector3 lastGlobalPos;
         Quaternion lastGlobalRot;
         bool justLanded;
         public void calcPlateInfluence()
         {
-            if (!Utilities.IsValid(attachment.parentTransform) || !character.isGrounded || lastJump)
+            if (!Utilities.IsValid(attachment.parentTransform) || !coyoteGrounded || jump)
             {
                 plateInfluence = Vector3.zero;
                 justLanded = true;
             }
             else if (!justLanded)
             {
-                transform.rotation *= Quaternion.Inverse(lastGlobalRot) * (attachment.parentTransform.rotation * localPlayer._localRotation);
-                plateInfluence = (attachment.parentTransform.position + (attachment.parentTransform.rotation * localPlayer._localPosition) - lastGlobalPos) / Time.fixedDeltaTime;
-                // if (moved)
-                // {
-                // } else
-                // {
-                //     plateInfluence = (attachment.transform.position - lastGlobalPos);
-                // }
-                // plateInfluence = lastGlobalPos;
+                // transform.rotation *= Quaternion.Inverse(lastGlobalRot) * (attachment.parentTransform.rotation * localPlayer._localRotation);
+                // plateInfluence = (attachment.parentTransform.position + (attachment.parentTransform.rotation * localPlayer._localPosition) - lastGlobalPos) / Time.fixedDeltaTime;
+                transform.rotation *= Quaternion.Inverse(lastGlobalRot) * localPlayer.endTransform.rotation;
+                plateInfluence = (localPlayer.endTransform.position - lastGlobalPos) / Time.fixedDeltaTime;
             }
             else
             {
-                landedChanged = true;
                 justLanded = false;
                 plateInfluence = Vector3.zero;
             }
         }
+        float dif;
+        float inputLookX;
 
         public void HandleRotation()
         {
@@ -323,9 +322,22 @@ namespace MMMaellon
             }
             else
             {
-                transform.Rotate(Vector3.up * Mathf.Lerp(0, lookH * Time.fixedDeltaTime, (Vector3.Angle(playerForward, transform.rotation * Vector3.forward) - 75) / 15));
+                // transform.Rotate(Vector3.up * Mathf.Lerp(0, lookH * Time.fixedDeltaTime, (Vector3.Angle(playerForward, transform.rotation * Vector3.forward) - 75) / 15));
+
+                //Code shared by Centauri
+                dif = Vector3.Dot(playerForward.normalized, transform.right);
+                inputLookX = Input.GetAxisRaw("Mouse X");
+
+                if (Mathf.Abs(dif) >= 0.89f && Mathf.Sign(dif) == Mathf.Sign(inputLookX))
+                {
+                    transform.localEulerAngles += 1.35f * inputLookX * Vector3.up;
+                }
             }
-            transform.rotation = Quaternion.FromToRotation(transform.rotation * Vector3.up, Vector3.up) * transform.rotation;
+            if (forceUpright)
+            {
+                transform.rotation = Quaternion.FromToRotation(transform.rotation * Vector3.up, Vector3.up) * transform.rotation;
+            }
+            localPlayer.endTransform.rotation = transform.rotation;
         }
 
         Vector3 oldPos;
@@ -333,28 +345,32 @@ namespace MMMaellon
         bool rotChanged = false;
         bool velChanged = false;
         bool posChanged = false;
-        [System.NonSerialized]
-        public bool landedChanged = false;
         public void RecordTransforms()
         {
             // Physics.SyncTransforms();
             oldPos = localPlayer._localPosition;
             oldVel = localPlayer._velocity;
+            localPlayer.localPosition = localPlayer.endTransform.localPosition;
+            localPlayer.localRotation = localPlayer.endTransform.localRotation;
             if (Utilities.IsValid(attachment.parentTransform))
             {
-                localPlayer.localPosition = Quaternion.Inverse(attachment.parentTransform.rotation) * (transform.position - attachment.parentTransform.position);
-                localPlayer.localRotation = Quaternion.Inverse(attachment.parentTransform.rotation) * transform.rotation;
-                localPlayer.velocity = Quaternion.Inverse(attachment.parentTransform.rotation) * ((oldPos - localPlayer._localPosition) / Time.deltaTime);
+                if (!parentTransformChanged)
+                {
+                    localPlayer.velocity = (localPlayer._localPosition - oldPos) / Time.fixedDeltaTime;
+                }
+                else
+                {
+                    localPlayer.velocity = (localPlayer._localPosition - ((Quaternion.Inverse(attachment.parentTransform.rotation) * lastGlobalPos) - attachment.parentTransform.position)) / Time.fixedDeltaTime;
+                }
             } else
             {
-                localPlayer.localPosition = transform.position;
-                localPlayer.localRotation = transform.rotation;
                 localPlayer.velocity = character.velocity;
             }
-            rotChanged = Vector3.Angle(localPlayer._syncedRot * Vector3.forward, localPlayer._localRotation * Vector3.forward) > 10f;//arbitrarily picked limit
-            velChanged = (localPlayer._syncedVel.y >= 0 && oldVel.y < -0.01f) || Vector3.Distance(localPlayer._syncedVel, oldVel) > 0.1f;//arbitrarily picked limit
-            posChanged = Vector3.Distance(localPlayer._syncedPos, localPlayer._syncedPos + localPlayer._syncedVel * (Time.timeSinceLevelLoad - localPlayer.syncTime)) > 0.1f;//arbitrarily picked limit
-            localPlayer.needSync = localPlayer.needSync || landedChanged || rotChanged || velChanged || posChanged;
+            localPlayer.needSync = localPlayer.needSync || Vector3.Angle(localPlayer._syncedRot * Vector3.forward, localPlayer._localRotation * Vector3.forward) > 10f;                                             //check rotation
+            localPlayer.needSync = localPlayer.needSync || (localPlayer._syncedVel.y >= 0 && oldVel.y < -0.01f) || Vector3.Distance(localPlayer._syncedVel, oldVel) > 0.1f;                                         //check velocity
+            localPlayer.needSync = localPlayer.needSync || Vector3.Distance(localPlayer._localPosition, localPlayer._syncedPos + localPlayer._syncedVel * (Time.timeSinceLevelLoad - localPlayer.syncTime)) > 0.1f; //check position
+
+            // Debug.LogWarning("pos changed " + Vector3.Distance(localPlayer._localPosition, localPlayer._syncedPos + localPlayer._syncedVel * (Time.timeSinceLevelLoad - localPlayer.syncTime)));
         }
 
         TectonicPlate hitPlate;

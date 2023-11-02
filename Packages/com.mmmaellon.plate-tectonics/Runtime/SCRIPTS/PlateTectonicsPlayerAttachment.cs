@@ -17,7 +17,6 @@ namespace MMMaellon
         public override void OnDeserialization()
         {
             _syncedUpdateCounter = updateCounter;
-            Debug.LogWarning("attachment OnDeserialization " + sync.updateCounter + ">" + updateCounter);
             if (sync._syncedUpdateCounter > _syncedUpdateCounter)
             {
                 sync.JointOnDeserialization();
@@ -27,6 +26,7 @@ namespace MMMaellon
         [System.NonSerialized]
         public PlateTectonics plateTectonics;
         public PlateTectonicsPlayerSync sync;
+        public Transform localTransform;
 
         [System.NonSerialized, FieldChangeCallback(nameof(parentTransform))]
         public Transform _parentTransform;
@@ -36,8 +36,21 @@ namespace MMMaellon
             set
             {
                 _parentTransform = value;
-                transform.position = sync.transform.position;
-                transform.SetParent(value, true);
+                localTransform.SetParent(null, true);
+                transform.SetParent(null, true);
+                transform.localScale = Vector3.one;
+                if (Utilities.IsValid(value))
+                {
+                    transform.position = value.position;
+                    transform.rotation = value.rotation;
+                    transform.SetParent(value, true);
+                }
+                else
+                {
+                    transform.position = Vector3.zero;
+                    transform.rotation = Quaternion.identity;
+                }
+                localTransform.SetParent(transform, true);
                 if (Utilities.IsValid(Networking.LocalPlayer) && Networking.LocalPlayer.IsOwner(gameObject))
                 {
                     updateCounter = sync.updateCounter;

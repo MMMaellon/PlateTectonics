@@ -13,10 +13,14 @@ namespace MMMaellon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class PlateTectonicsPlayerSync : CyanPlayerObjectPoolObject
     {
+        public Transform startTransform;
+        public Transform endTransform;
         public PlateTectonicsPlayerAttachment attachment;
         public VRCStation chair;
         [System.NonSerialized]
         public bool needSync;
+        [System.NonSerialized]
+        public bool syncRequested;
         public float networkUpdateInterval = 0.33333333333333333f;
         [System.NonSerialized]
         bool local = false;
@@ -28,18 +32,12 @@ namespace MMMaellon
         public Vector3 _lastSyncedVel;
         public override void OnPreSerialization()
         {
-            RequestSerialization();
             _syncedPos = _localPosition;
             _syncedRot = _localRotation;
             _syncedVel = _velocity;
-            if (Utilities.IsValid(attachment.plateTectonics))
-            {
-                attachment.plateTectonics.moved = false;
-                attachment.plateTectonics.landedChanged = false;
-            }
-            attachment.transform.position = transform.position;
             syncTime = Time.timeSinceLevelLoad;
             needSync = false;
+            syncRequested = false;
             updateCounter++;
         }
         Transform _syncedTransform;
@@ -49,6 +47,8 @@ namespace MMMaellon
         public Quaternion _syncedRot;
         [System.NonSerialized]
         public Vector3 _syncedVel;
+        // [System.NonSerialized]
+        // public Vector3 _syncedGlobalVel;
         [System.NonSerialized, UdonSynced]
         public uint updateCounter = 0;
         [System.NonSerialized]
@@ -56,9 +56,9 @@ namespace MMMaellon
         public override void OnDeserialization()
         {
             _syncedUpdateCounter = updateCounter;
-            Debug.LogWarning("Sync OnDeserialization " + updateCounter + ">" + attachment.updateCounter);
             _localPosition = localPosition;
             _localRotation = localRotation;
+            _velocity = velocity;
             if (_syncedUpdateCounter > attachment._syncedUpdateCounter)
             {
                 JointOnDeserialization();
@@ -67,25 +67,28 @@ namespace MMMaellon
 
         public void JointOnDeserialization()
         {
-            Debug.LogWarning("JointOnDeserialization");
-            _syncedPos = _localPosition;
-            _syncedRot = _localRotation;
             _syncedVel = _velocity;
             _syncedTransform = attachment.parentTransform;
-            attachment.transform.position = transform.position;
+            endTransform.SetParent(_syncedTransform, true);
             if (Utilities.IsValid(_syncedTransform))
             {
-                _lastSyncedPos = Quaternion.Inverse(_syncedTransform.rotation) * (transform.position - _syncedTransform.position);
-                _lastSyncedRot = Quaternion.Inverse(_syncedTransform.rotation) * transform.rotation;
+                endTransform.position = _syncedTransform.position + _syncedTransform.rotation * _localPosition;
+                endTransform.rotation = _syncedTransform.rotation * _localRotation;
                 _lastSyncedVel = Quaternion.Inverse(_syncedTransform.rotation) * lastGlobalVel;
+                // _syncedGlobalVel = _syncedTransform.rotation * _velocity;
             }
             else
             {
-                _lastSyncedPos = transform.position;
-                _lastSyncedRot = transform.rotation;
+                endTransform.position = _localPosition;
+                endTransform.rotation = _localRotation;
                 _lastSyncedVel = lastGlobalVel;
+                // _syncedGlobalVel = _velocity;
             }
-            syncTime = Time.timeSinceLevelLoad - Time.deltaTime;
+            startTransform.SetParent(_syncedTransform, true);
+            startTransform.position = transform.position;
+            startTransform.rotation = transform.rotation;
+            // syncTime = Time.timeSinceLevelLoad - Time.deltaTime;
+            syncTime = Time.timeSinceLevelLoad;
         }
         [System.NonSerialized]
         public Vector3 _localPosition;
@@ -97,15 +100,12 @@ namespace MMMaellon
         public short _localPositionZ;
         public Vector3 localPosition
         {
-            get
-            {
-                return new Vector3(_localPositionX, _localPositionY, _localPositionZ) / 100f;
-            }
+            get => new Vector3(_localPositionX, _localPositionY, _localPositionZ) / 100f;
             set
             {
-                _localPositionX = (short) Mathf.Clamp(value.x * 100f, -32000, 32000);
-                _localPositionY = (short) Mathf.Clamp(value.y * 100f, -32000, 32000);
-                _localPositionZ = (short) Mathf.Clamp(value.z * 100f, -32000, 32000);
+                _localPositionX = (short) Mathf.Clamp(value.x * 100f, short.MinValue + 10, short.MaxValue - 10);//adding buffer of 10 because fuck unity
+                _localPositionY = (short) Mathf.Clamp(value.y * 100f, short.MinValue + 10, short.MaxValue - 10);//adding buffer of 10 because fuck unity
+                _localPositionZ = (short) Mathf.Clamp(value.z * 100f, short.MinValue + 10, short.MaxValue - 10);//adding buffer of 10 because fuck unity
                 _localPosition = value;
             }
         }
@@ -128,26 +128,33 @@ namespace MMMaellon
             }
             set
             {
-                _localRotation = value;
                 value.ToAngleAxis(out rotationAngle, out rotationVector);
                 rotationVector *= 50f * rotationAngle;
-                _localRotationX = (short) Mathf.Clamp(System.Single.IsNaN(rotationVector.x) ? 0 : rotationVector.x, -32000, 32000);
-                _localRotationY = (short) Mathf.Clamp(System.Single.IsNaN(rotationVector.y) ? 0 : rotationVector.y, -32000, 32000);
-                _localRotationZ = (short) Mathf.Clamp(System.Single.IsNaN(rotationVector.z) ? 0 : rotationVector.z, -32000, 32000);
+                _localRotationX = (short) Mathf.Clamp(System.Single.IsNaN(rotationVector.x) ? 0 : rotationVector.x, short.MinValue + 10, short.MaxValue - 10);//adding buffer of 10 because fuck unity
+                _localRotationY = (short) Mathf.Clamp(System.Single.IsNaN(rotationVector.y) ? 0 : rotationVector.y, short.MinValue + 10, short.MaxValue - 10);//adding buffer of 10 because fuck unity
+                _localRotationZ = (short) Mathf.Clamp(System.Single.IsNaN(rotationVector.z) ? 0 : rotationVector.z, short.MinValue + 10, short.MaxValue - 10);//adding buffer of 10 because fuck unity
+                _localRotation = value;
             }
         }
         [System.NonSerialized]
         public float syncTime;
         float velDiff;
-        [System.NonSerialized, UdonSynced, FieldChangeCallback(nameof(velocity))]
+        [System.NonSerialized]
         public Vector3 _velocity;
-        Vector3 lastVel;
+        [System.NonSerialized, UdonSynced]
+        public short _localVelX;
+        [System.NonSerialized, UdonSynced]
+        public short _localVelY;
+        [System.NonSerialized, UdonSynced]
+        public short _localVelZ;
         public Vector3 velocity
         {
-            get => _velocity;
+            get => _velocity = new Vector3(_localVelX, _localVelY, _localVelZ) / 100f;
             set
             {
-                lastVel = _velocity;
+                _localVelX = (short) Mathf.Clamp(value.x * 100f, short.MinValue + 10, short.MaxValue - 10);//adding buffer of 10 because fuck unity
+                _localVelY = (short) Mathf.Clamp(value.y * 100f, short.MinValue + 10, short.MaxValue - 10);//adding buffer of 10 because fuck unity
+                _localVelZ = (short) Mathf.Clamp(value.z * 100f, short.MinValue + 10, short.MaxValue - 10);//adding buffer of 10 because fuck unity
                 _velocity = value;
             }
         }
@@ -163,37 +170,34 @@ namespace MMMaellon
         {
             if (local)
             {
-                if (syncTime + networkUpdateInterval < Time.timeSinceLevelLoad && needSync)
+                if (syncTime + networkUpdateInterval < Time.timeSinceLevelLoad && needSync && !syncRequested)
                 {
                     RequestSerialization();
-                    needSync = false;
+                    syncRequested = true;
                 }
-            }
-                else
+            } else
             {
                 Physics.SyncTransforms();
                 if (Utilities.IsValid(_syncedTransform))
                 {
-                    startPos = _syncedTransform.position + _syncedTransform.rotation * _lastSyncedPos;
-                    startRot = _syncedTransform.rotation * _lastSyncedRot;
                     startVel = _syncedTransform.rotation * _lastSyncedVel;
-                    endPos = _syncedTransform.position + _syncedTransform.rotation * _syncedPos;
-                    endRot = _syncedTransform.rotation * _syncedRot;
                     endVel = _syncedTransform.rotation * _syncedVel;
                 }
                 else
                 {
-                    startPos = _lastSyncedPos;
-                    startRot = _lastSyncedRot;
                     startVel = _lastSyncedVel;
-                    endPos = _syncedPos;
-                    endRot = _syncedRot;
                     endVel = _syncedVel;
                 }
-                nextGlobalPos = HermiteInterpolatePosition(startPos, startVel, endPos, endVel);
+                nextGlobalPos = HermiteInterpolatePosition(startTransform.position, startVel, endTransform.position, endVel);
                 lastGlobalVel = (nextGlobalPos - transform.position) / Time.deltaTime;
                 transform.position = nextGlobalPos;
-                transform.rotation = Quaternion.Slerp(startRot, endRot, interpolation);
+                transform.rotation = Quaternion.Slerp(startTransform.rotation, endTransform.rotation, interpolation);
+
+                //force upright
+                if (attachment.plateTectonics.forceUpright)
+                {
+                    transform.rotation = Quaternion.FromToRotation(transform.rotation * Vector3.up, Vector3.up) * transform.rotation;
+                }
             }
         }
 
@@ -201,7 +205,6 @@ namespace MMMaellon
         {
             if (Utilities.IsValid(Owner) && Owner.isLocal)
             {
-                // chair.PlayerMobility = VRCStation.Mobility.Mobile;
                 Networking.SetOwner(Owner, attachment.gameObject);
                 chair.disableStationExit = true;
                 local = true;
@@ -216,7 +219,7 @@ namespace MMMaellon
 
         public void SitInChairDelayed()
         {
-            transform.position = Networking.LocalPlayer.GetPosition();
+            attachment.plateTectonics.transform.position = Networking.LocalPlayer.GetPosition();
             SendCustomEventDelayedFrames(nameof(SitInChair), 1, VRC.Udon.Common.Enums.EventTiming.Update);
         }
 
@@ -231,22 +234,6 @@ namespace MMMaellon
             }
             return tempName;
         }
-
-        // public void RecordTransforms()
-        // {
-        //     if (Utilities.IsValid(attachment.parentTransform))
-        //     {
-        //         // localPosition = attachment.parentTransform.InverseTransformPoint(transform.position);
-        //         // localRotation = Quaternion.Inverse(attachment.parentTransform.rotation) * transform.rotation;
-        //         localPosition = Quaternion.Inverse(attachment.parentTransform.rotation) * (transform.position - attachment.parentTransform.position);
-        //         localRotation = Quaternion.Inverse(attachment.parentTransform.rotation) * transform.rotation;
-        //     }
-        //     else
-        //     {
-        //         localPosition = transform.position;
-        //         localRotation = transform.rotation;
-        //     }
-        // }
 
         public void SitInChair()
         {
@@ -271,7 +258,7 @@ namespace MMMaellon
             get
             {
                 // return lagTime <= 0 ? 1 : Mathf.Lerp(0, 1, (Time.timeSinceLevelLoad - syncTime) / lagTime);
-                return Mathf.Clamp((Time.timeSinceLevelLoad - syncTime) / networkUpdateInterval, 0, 100) / 1.5f;//the 1.5f makes it smoother and gives us room for 
+                return (Time.timeSinceLevelLoad - syncTime) / networkUpdateInterval;
             }
         }
         public Vector3 HermiteInterpolatePosition(Vector3 startPos, Vector3 startVel, Vector3 endPos, Vector3 endVel)
@@ -280,12 +267,12 @@ namespace MMMaellon
             {
                 if (interpolation < 1)
                 {
-                    posControl1 = startPos + _syncedTransform.rotation * startVel * lagTime * interpolation / 3f;
-                    posControl2 = endPos - _syncedTransform.rotation * endVel * lagTime * (1.0f - interpolation) / 3f;
+                    posControl1 = startPos + startVel * lagTime * interpolation / 3f;
+                    posControl2 = endPos - endVel * lagTime * (1.0f - interpolation) / 3f;
                     return Vector3.Lerp(Vector3.Lerp(posControl1, endPos, interpolation), Vector3.Lerp(startPos, posControl2, interpolation), interpolation);
                     // return Vector3.Lerp(startPos, endPos, interpolation);
                 }
-                return endPos + _syncedTransform.rotation * endVel * lagTime * (interpolation - 1);
+                return endPos + endVel * lagTime * (interpolation - 1);
             }
             else
             {

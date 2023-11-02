@@ -10,60 +10,58 @@ public class DemoRandomMovementGenerator : UdonSharpBehaviour
 {
     void Start()
     {
-        SetNewTarget();
+        if (Networking.LocalPlayer.IsOwner(gameObject))
+        {
+            SetNewTarget();
+        }
+        else
+        {
+            // transform.position = new Vector3(Random.Range(-randomRange * 10f, randomRange * 10f), transform.position.y, Random.Range(-randomRange * 10f, randomRange * 10f));
+        }
     }
     public Transform debugObj;
     public Rigidbody rigid;
-    Vector3 posControl1;
-    Vector3 posControl2;
-    float lagTime = 0.5f;
-    public Vector3 HermiteInterpolatePosition(Vector3 startPos, Vector3 startVel, Vector3 endPos, Vector3 endVel, float interpolation)
-    {//Shout out to Kit Kat for suggesting the improved hermite interpolation
-        posControl1 = startPos + startVel * lagTime * interpolation / 3f;
-        posControl2 = endPos - endVel * lagTime * (1.0f - interpolation) / 3f;
-        return Vector3.Lerp(Vector3.Lerp(posControl1, endPos, interpolation), Vector3.Lerp(startPos, posControl2, interpolation), interpolation);
-    }
-    public Quaternion HermiteInterpolateRotation(Quaternion startRot, Vector3 startSpin, Quaternion endRot, Vector3 endSpin, float interpolation)
-    {
-        // rotControl1 = startRot * Quaternion.Euler(startSpin * lagTime * interpolation / 3f);
-        // rotControl2 = endRot * Quaternion.Euler(-1.0f * endSpin * lagTime * (1.0f - interpolation) / 3f);
-        // return Quaternion.Slerp(rotControl1, rotControl2, interpolation);
-
-
-        //we aren't actually doing hermite. It turns out higher order stuff isn't necessary just do a slerp
-        return Quaternion.Slerp(startRot, endRot, interpolation);
-    }
     [UdonSynced, FieldChangeCallback(nameof(targetPos))]
     Vector3 _targetPos = Vector3.zero;
     [UdonSynced, FieldChangeCallback(nameof(startPos))]
     Vector3 _startPos = Vector3.zero;
-    bool startPosSet = false;
+    Vector3 startPosCorrection = Vector3.zero;
+    bool startSetPos;
+    bool startSetRot;
     public Vector3 startPos
     {
         get => _startPos;
         set
         {
             _startPos = value;
-            if(!Networking.LocalPlayer.IsOwner(gameObject) && !startPosSet)
+            if(!Networking.LocalPlayer.IsOwner(gameObject))
             {
-                startPosSet = true;
-                transform.position = value;
+                if (!startSetPos)
+                {
+                    transform.position = value;
+                    startSetPos = true;
+                }
+                startPosCorrection = value - transform.position;
             }
         }
     }
     [UdonSynced, FieldChangeCallback(nameof(startRot))]
     Quaternion _startRot;
-    bool startRotSet = false;
+    Quaternion startRotCorrection = Quaternion.identity;
     public Quaternion startRot
     {
         get => _startRot;
         set
         {
             _startRot = value;
-            if(!Networking.LocalPlayer.IsOwner(gameObject) && !startRotSet)
+            if(!Networking.LocalPlayer.IsOwner(gameObject))
             {
-                startRotSet = true;
-                transform.rotation = value;
+                if (!startSetRot)
+                {
+                    transform.rotation = value;
+                    startSetRot = true;
+                }
+                startRotCorrection = value * Quaternion.Inverse(transform.rotation);
             }
         }
     }
@@ -89,6 +87,8 @@ public class DemoRandomMovementGenerator : UdonSharpBehaviour
     public float randomRange = 20f;
     Vector3 acceleration;
     Vector3 angularAcceleration;
+    Vector3 axis;
+    float angle;
     public void Update()
     {
         if (!Utilities.IsValid(Networking.LocalPlayer))
@@ -107,17 +107,45 @@ public class DemoRandomMovementGenerator : UdonSharpBehaviour
             acceleration = Mathf.Clamp01(Time.timeSinceLevelLoad - (lastTargetSwitch + 2f)) * (transform.rotation * Vector3.forward * Mathf.Pow((45f - Mathf.Clamp(Mathf.Abs(currAngle), 0, 45)) / 45f, 2) * Mathf.Clamp(currDistance / 3, 0, 15) * 5 - rigid.velocity * 2) * Time.deltaTime;
             angularAcceleration = Mathf.Clamp01(Time.timeSinceLevelLoad - (lastTargetSwitch + 2f)) * (Vector3.up * Mathf.Lerp(-1f, 1f, Mathf.Pow(currAngle / 180f * 8, 3) + 0.5f) * 2 - rigid.angularVelocity * 5) * Time.deltaTime;
         }
+
+
+
+        if (Networking.LocalPlayer.IsOwner(gameObject))
+        {
+            if (lastDistance > 0 && currDistance < 5f)
+            {
+                SetNewTarget();
+            }
+        }
+        else
+        {
+            //corrections
+            if (startPosCorrection.magnitude > 0)
+            {
+                acceleration += startPosCorrection * Time.deltaTime * 0.5f;
+                startPosCorrection = 0.5f * startPosCorrection;
+            }
+            startRotCorrection.ToAngleAxis(out angle, out axis);
+            if (angle > 0)
+            {
+                angularAcceleration += Mathf.Clamp(angle, -90f, 90f) * axis * Time.deltaTime * 0.5f;
+                startRotCorrection = Quaternion.Slerp(Quaternion.identity, startRotCorrection, 0.5f);
+            }
+        }
+
+
+
         rigid.velocity += acceleration;
         rigid.angularVelocity += angularAcceleration;
 
-        if (Networking.LocalPlayer.IsOwner(gameObject) && lastDistance > 0 && currDistance < 5f)
-        {
-            SetNewTarget();
-        }
+
+
         lastDistance = currDistance;
         lastAngle = currAngle;
         startPos = transform.position;
         startRot = transform.rotation;
+
+
     }
     float lastTargetSwitch;
     public void SetNewTarget()

@@ -189,7 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerMobility: 1
   canUseStationFromStation: 1
-  animatorController: {fileID: 0}
+  animatorController: {fileID: 9100000, guid: bbad6f2d715ac1a49b33663561e72ba3, type: 2}
   disableStationExit: 1
   seated: 0
   stationEnterPlayerLocation: {fileID: 0}

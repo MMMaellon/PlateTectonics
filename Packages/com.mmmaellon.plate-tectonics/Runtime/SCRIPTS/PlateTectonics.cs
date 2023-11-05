@@ -13,15 +13,29 @@ namespace MMMaellon
     {
         public CharacterController character;
         public TectonicPlate startingPlate;
+        public TMPro.TextMeshPro recalibrationMessage;
+        public bool allowRecalibration = true;
+        public KeyCode recalibrationShortcut = KeyCode.Tab;
+        public float recalibrationActivationDelay = 2f;
+        public float reclaibrationActivationAngle = 15f;
 
         public bool forceUprightPlayers = true;
 
         public bool useGlobalTransformsWhileInAir = true;
 
+        Color dimMessageColor;
+        Color brightMessageColor;
+
         VRCPlayerApi localPlayerAPI;
         public void Start()
         {
             localPlayerAPI = Networking.LocalPlayer;
+            if (Utilities.IsValid(recalibrationMessage))
+            {
+                dimMessageColor = recalibrationMessage.color;
+                dimMessageColor.a = 0.1f;
+                brightMessageColor = recalibrationMessage.color;
+            }
         }
 
         public void AttachToStartingPlate()
@@ -59,6 +73,8 @@ namespace MMMaellon
             transform.position = localPlayerAPI.GetPosition();
             transform.rotation = localPlayerAPI.GetRotation();
             _playerRetainedVelocity = Vector3.zero;
+            localPlayer.transform.localPosition = Vector3.zero;
+            localPlayer.transform.localRotation = Quaternion.identity;
             localPlayer.chair.UseStation(localPlayerAPI);
             respawn = false;
         }
@@ -88,8 +104,6 @@ namespace MMMaellon
                 transform.rotation = localPlayerAPI.GetRotation();
 
                 localPlayer = tempPlayer;
-                // localPlayer.transform.position = transform.position;
-
 
                 runSpeed = localPlayerAPI.GetRunSpeed();
                 walkSpeed = localPlayerAPI.GetWalkSpeed();
@@ -163,6 +177,10 @@ namespace MMMaellon
                     }
                 }
             }
+            else
+            {
+                lookH = value;
+            }
         }
 
         Vector3 plateInfluence;
@@ -185,6 +203,10 @@ namespace MMMaellon
         Transform lastTransform;
         bool parentTransformChanged;
         bool freeMovement;
+        VRCPlayerApi.TrackingData headData;
+        Vector3 headOffset;
+        Vector3 playerAPIHeadOffset;
+        float lastNonCalibrate;
         public void FixedUpdate()
         {
             //Stolen from client sim
@@ -195,25 +217,29 @@ namespace MMMaellon
             Physics.SyncTransforms();
             speed = GetSpeed();
             parentTransformChanged = lastTransform != attachment.parentTransform;
-
-            if (localPlayerAPI.IsUserInVR())
+            headData = localPlayerAPI.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
+            playerForward = headData.rotation * Vector3.forward;
+            playerForward.y = 0;
+            if (playerForward.magnitude <= 0)
             {
                 playerForward = transform.rotation * Vector3.forward;
-                playerForward.y = 0;
             }
-            else
-            {
-                playerForward = localPlayerAPI.GetTrackingData(VRCPlayerApi.TrackingDataType.Head).rotation * Vector3.forward;
-                playerForward.y = 0;
-                if (playerForward.magnitude <= 0)
-                {
-                    playerForward = transform.rotation * Vector3.forward;
-                }
-            }
+
             moveRotation = Quaternion.FromToRotation(Vector3.forward, playerForward);
 
             // Always move along the camera forward as it is the direction that it being aimed at
             moveInfluence = input.y * speed.x * (moveRotation * Vector3.forward) + input.x * speed.y * (moveRotation * Vector3.right);
+
+
+            if (localPlayerAPI.IsUserInVR())
+            {
+                headOffset = headData.position - transform.position;
+                headOffset.y = 0;
+                moveInfluence += headOffset / Time.fixedDeltaTime;
+                playerAPIHeadOffset = headData.position - localPlayerAPI.GetPosition();
+                playerAPIHeadOffset.y = 0;
+                localPlayer.transform.position = transform.position - playerAPIHeadOffset;
+            }
 
             //calc coyote time
             if (character.isGrounded)
@@ -221,10 +247,10 @@ namespace MMMaellon
                 lastGrounded = Time.timeSinceLevelLoad;
             }
             coyoteGrounded = (character.isGrounded || (coyoteGrounded && (lastGrounded + coyoteTime > Time.timeSinceLevelLoad) && !jump)) && !parentTransformChanged;
-            if (useGlobalTransformsWhileInAir && !coyoteGrounded && lastGrounded + coyoteTime <= Time.timeSinceLevelLoad && attachment.parentTransformName != "")
-            {
-                attachment.parentTransformName = "";
-            }
+            // if (useGlobalTransformsWhileInAir && !coyoteGrounded && lastGrounded + coyoteTime <= Time.timeSinceLevelLoad && attachment.parentTransformName != "")
+            // {
+            //     attachment.parentTransformName = "";
+            // }
 
             if (coyoteGrounded && !parentTransformChanged)
             {
@@ -257,16 +283,15 @@ namespace MMMaellon
                 _playerRetainedVelocity += moveRotation * inputAcceleration + Time.fixedDeltaTime * Physics.gravity;
             }
             freeMovement = !coyoteGrounded || moveInfluence.magnitude > 0 || jump || parentTransformChanged || Vector3.Distance(localPlayer._syncedPos, localPlayer.localPosition) > 0.1f;
+            character.Move(_playerRetainedVelocity * Time.fixedDeltaTime);
+            // localPlayerAPI.SetVelocity(_playerRetainedVelocity);
+            // character.Move((localPlayerAPI.GetPosition() - transform.position) * Time.fixedDeltaTime);
             if (freeMovement)
             {
-                character.Move(_playerRetainedVelocity * Time.fixedDeltaTime);
                 localPlayer.endTransform.position = transform.position;
             }
             else
             {
-                // transform.position = localPlayer.endTransform.position;
-                // character.Move(STICK_TO_GROUND_FORCE * Time.fixedDeltaTime);
-                character.Move(_playerRetainedVelocity * Time.fixedDeltaTime);
                 if (Vector3.Distance(localPlayer.endTransform.position, transform.position) > 0.001f)//stops random slipping
                 {
                     localPlayer.endTransform.position = transform.position;
@@ -278,6 +303,49 @@ namespace MMMaellon
             lastGlobalRot = localPlayer.endTransform.rotation;
             // jump = false;
             lastTransform = attachment.parentTransform;
+
+            //recalibration
+            if (!allowRecalibration)
+            {
+                //do nothing
+                if (Utilities.IsValid(recalibrationMessage))
+                {
+                    recalibrationMessage.gameObject.SetActive(false);
+                }
+            }
+            else if (!localPlayerAPI.IsUserInVR())
+            {
+                if (Utilities.IsValid(recalibrationMessage))
+                {
+                    recalibrationMessage.gameObject.SetActive(false);
+                }
+
+                if (Input.GetKeyDown(recalibrationShortcut))
+                {
+                    Recalibrate();
+                }
+            }
+            else if (Vector3.Angle(headData.rotation * Vector3.forward, Vector3.down) > reclaibrationActivationAngle)
+            {
+                lastNonCalibrate = Time.timeSinceLevelLoad;
+                if (Utilities.IsValid(recalibrationMessage))
+                {
+                    recalibrationMessage.color = dimMessageColor;
+                }
+            }
+            else if (lastNonCalibrate + recalibrationActivationDelay < Time.timeSinceLevelLoad)
+            {
+                lastNonCalibrate = Time.timeSinceLevelLoad;
+                Recalibrate();
+            }
+            else
+            {
+                if (Utilities.IsValid(recalibrationMessage))
+                {
+                    brightMessageColor.a = Mathf.Sin((Time.timeSinceLevelLoad - lastNonCalibrate) * 8) * 0.5f + 0.5f;
+                    recalibrationMessage.color = brightMessageColor;
+                }
+            }
         }
 
         Vector3 lastGlobalPos;
@@ -324,13 +392,11 @@ namespace MMMaellon
                 }
                 else
                 {
-                    transform.Rotate(Vector3.up * lookH * Time.fixedDeltaTime);
+                    transform.Rotate(Vector3.up * lookH * 90f * 1.35f * Time.fixedDeltaTime);
                 }
             }
             else
             {
-                // transform.Rotate(Vector3.up * Mathf.Lerp(0, lookH * Time.fixedDeltaTime, (Vector3.Angle(playerForward, transform.rotation * Vector3.forward) - 75) / 15));
-
                 //Code shared by Centauri
                 dif = Vector3.Dot(playerForward.normalized, transform.right);
                 inputLookX = Input.GetAxisRaw("Mouse X");
@@ -395,14 +461,19 @@ namespace MMMaellon
             }
             localPlayer.attachment.parentTransformName = hitPlate.transformName;
         }
-        // public void OnTriggerExit(Collider hit)
-        // {
-        //     if (useGlobalTransformsWhileInAir || !Utilities.IsValid(hit) || !Utilities.IsValid(attachment) || hit.transform != attachment.transform)
-        //     {
-        //         return;
-        //     }
-        //     attachment.parentTransformName = "";
-        // }
+        public void OnTriggerExit(Collider hit)
+        {
+            if (!useGlobalTransformsWhileInAir || !Utilities.IsValid(hit) || !Utilities.IsValid(attachment))
+            {
+                return;
+            }
+            hitPlate = hit.GetComponent<TectonicPlate>();
+            if (!Utilities.IsValid(hitPlate) || hitPlate.transformName != attachment.parentTransformName)
+            {
+                return;
+            }
+            attachment.parentTransformName = "";
+        }
 
 
         private Vector2 GetSpeed()
@@ -413,6 +484,12 @@ namespace MMMaellon
                 strafeSpeed);
 
             return speed;
+        }
+
+        public void Recalibrate()
+        {
+            localPlayerAPI.TeleportTo(localPlayerAPI.GetPosition(), localPlayerAPI.GetRotation());
+            SitInChair();
         }
     }
 }

@@ -200,6 +200,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (48)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &23646292 stripped
@@ -377,6 +389,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &68539941 stripped
@@ -470,6 +494,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (59)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &72327653 stripped
@@ -563,6 +599,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (18)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &82982239 stripped
@@ -656,6 +704,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (32)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &89960493 stripped
@@ -749,6 +809,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &128547502 stripped
@@ -854,6 +926,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (44)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &236826218 stripped
@@ -1063,6 +1147,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &247319127 stripped
@@ -1127,7 +1223,7 @@ PrefabInstance:
     - target: {fileID: 3571915064147460076, guid: de40fb67e474b7848b4000c85e768d0e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3571915064147460076, guid: de40fb67e474b7848b4000c85e768d0e,
         type: 3}
@@ -1198,6 +1294,18 @@ PrefabInstance:
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de40fb67e474b7848b4000c85e768d0e, type: 3}
+--- !u!114 &255781044 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 332236307218591394, guid: de40fb67e474b7848b4000c85e768d0e,
+    type: 3}
+  m_PrefabInstance: {fileID: 255781043}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2127092308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dc0d0ae9ccc3db418ba6f9d863bcfd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &279418399
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1393,6 +1501,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (72)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &311195875 stripped
@@ -1486,6 +1606,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (30)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &321303143 stripped
@@ -1695,6 +1827,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (35)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &344123533 stripped
@@ -1788,6 +1932,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (69)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &361648040 stripped
@@ -1881,6 +2037,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (57)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &369675397 stripped
@@ -1974,6 +2142,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (66)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &399372906 stripped
@@ -1993,6 +2173,12 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3571915064147460077, guid: de40fb67e474b7848b4000c85e768d0e,
     type: 3}
   m_PrefabInstance: {fileID: 805386107}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &416303414 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8477507289171489131, guid: 006c6ca635b7ace4a8e3d45f24f3bb33,
+    type: 3}
+  m_PrefabInstance: {fileID: 848823223782077224}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &447448642
 PrefabInstance:
@@ -2073,6 +2259,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (43)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &447448643 stripped
@@ -2166,6 +2364,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &457645328 stripped
@@ -2265,6 +2475,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (21)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &508682901 stripped
@@ -2364,6 +2586,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (64)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &524805225 stripped
@@ -2457,6 +2691,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (80)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &527472837 stripped
@@ -2550,6 +2796,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (49)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &540429010 stripped
@@ -2643,6 +2901,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (67)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &549678909 stripped
@@ -2736,6 +3006,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (50)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &551676176 stripped
@@ -2835,6 +3117,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (77)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &566545867 stripped
@@ -2928,6 +3222,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (46)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &589619152 stripped
@@ -3021,6 +3327,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &596901856 stripped
@@ -3114,6 +3432,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &599615040 stripped
@@ -3207,6 +3537,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &607266032 stripped
@@ -3300,6 +3642,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &611208861 stripped
@@ -3393,6 +3747,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (45)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &619613433 stripped
@@ -3486,6 +3852,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (51)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &630423466 stripped
@@ -3579,6 +3957,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (19)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &656891708 stripped
@@ -3678,6 +4068,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (78)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &708327845 stripped
@@ -3771,6 +4173,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &735187584 stripped
@@ -3877,7 +4291,7 @@ Transform:
   m_LocalScale: {x: 25, y: 25, z: 25}
   m_Children: []
   m_Father: {fileID: 5444762579523417440}
-  m_RootOrder: 10
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &753845726
 PrefabInstance:
@@ -3958,6 +4372,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (31)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &753845727 stripped
@@ -4051,6 +4477,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (33)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &761091014 stripped
@@ -4144,6 +4582,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (63)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &766929017 stripped
@@ -4237,6 +4687,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (20)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &782328395 stripped
@@ -4550,6 +5012,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &888607815 stripped
@@ -4643,6 +5117,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (17)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &891272451 stripped
@@ -4736,6 +5222,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (68)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &891426635 stripped
@@ -4835,6 +5333,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (24)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &966433679 stripped
@@ -4928,6 +5438,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (34)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &970569884 stripped
@@ -5021,6 +5543,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (73)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &991001551 stripped
@@ -5120,6 +5654,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (71)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1007975771 stripped
@@ -5213,6 +5759,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (38)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1020498510 stripped
@@ -5306,6 +5864,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (47)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1029086611 stripped
@@ -5399,6 +5969,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (25)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1031871378 stripped
@@ -5504,6 +6086,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (60)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1087767277 stripped
@@ -5597,6 +6191,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (61)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1179672713 stripped
@@ -5696,6 +6302,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (75)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1232627929 stripped
@@ -5789,6 +6407,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (26)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1259866680 stripped
@@ -5882,6 +6512,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (39)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1260949794 stripped
@@ -5975,6 +6617,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1319243625 stripped
@@ -6068,6 +6722,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (81)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1328804102 stripped
@@ -6161,6 +6827,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (76)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1381517805 stripped
@@ -6347,6 +7025,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (65)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1417397386 stripped
@@ -6440,6 +7130,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (37)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1420955034 stripped
@@ -6533,6 +7235,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (74)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1437001878 stripped
@@ -6626,6 +7340,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1450409516 stripped
@@ -6719,6 +7445,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (54)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1473492488 stripped
@@ -6812,6 +7550,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (58)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1479756548 stripped
@@ -6905,6 +7655,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (79)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1516950169 stripped
@@ -6998,6 +7760,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1526385994 stripped
@@ -7091,6 +7865,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (70)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1528108486 stripped
@@ -7184,6 +7970,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (55)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1553632540 stripped
@@ -7277,6 +8075,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1602018274 stripped
@@ -7402,7 +8212,7 @@ PrefabInstance:
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: NetworkIDs.Array.size
-      value: 185
+      value: 186
       objectReference: {fileID: 0}
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
@@ -8342,23 +9152,23 @@ PrefabInstance:
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: NetworkIDs.Array.data[185].ID
-      value: 401
+      value: 402
       objectReference: {fileID: 0}
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: DynamicMaterials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: eae9c11350249284e8400a100179e0b2, type: 2}
+      objectReference: {fileID: 2100000, guid: 99f7ea0146bcbb64d97a8468253bb347, type: 2}
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: DynamicMaterials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: fd20e45036ef323459e8286e9c23c02c, type: 2}
+      objectReference: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: DynamicMaterials.Array.data[2]
       value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: 2100000, guid: eae9c11350249284e8400a100179e0b2, type: 2}
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: DynamicMaterials.Array.data[3]
@@ -8368,12 +9178,12 @@ PrefabInstance:
         type: 3}
       propertyPath: DynamicMaterials.Array.data[4]
       value: 
-      objectReference: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: 2100000, guid: fd20e45036ef323459e8286e9c23c02c, type: 2}
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: DynamicMaterials.Array.data[5]
       value: 
-      objectReference: {fileID: 2100000, guid: fd20e45036ef323459e8286e9c23c02c, type: 2}
+      objectReference: {fileID: 2100000, guid: 8c19a618a0bd9844583b91dca0875a34, type: 2}
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: layerCollisionArr.Array.data[0]
@@ -13768,7 +14578,7 @@ PrefabInstance:
         type: 3}
       propertyPath: NetworkIDs.Array.data[185].gameObject
       value: 
-      objectReference: {fileID: 4257905176380830190}
+      objectReference: {fileID: 416303414}
     - target: {fileID: 8464459589408506562, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: serializedProgramAsset
@@ -13856,6 +14666,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (62)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1646170667 stripped
@@ -13949,6 +14771,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (53)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1666507526 stripped
@@ -14042,6 +14876,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (42)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1693107736 stripped
@@ -14135,6 +14981,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1746444970 stripped
@@ -14228,6 +15086,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1749666377 stripped
@@ -14404,6 +15274,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (36)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1783407847 stripped
@@ -14497,6 +15379,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (56)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1810929703 stripped
@@ -14706,6 +15600,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1825616021 stripped
@@ -14799,6 +15705,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (22)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1845413442 stripped
@@ -14892,6 +15810,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (23)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1900968370 stripped
@@ -14985,6 +15915,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (29)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1911435795 stripped
@@ -15078,6 +16020,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (27)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1951672914 stripped
@@ -15171,6 +16125,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (40)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &1972053689 stripped
@@ -15264,6 +16230,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (52)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &2019894608 stripped
@@ -15357,6 +16335,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (28)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &2034728354 stripped
@@ -15450,6 +16440,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateTectonicsPlayerSync (41)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7289012402067170886, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+    - target: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8567913394757579576, guid: c3243aa8c29c2cf4a943b689fca482e5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3243aa8c29c2cf4a943b689fca482e5, type: 3}
 --- !u!1 &2060091247 stripped
@@ -15779,6 +16781,12 @@ PrefabInstance:
       propertyPath: _syncMethod
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1252681645193765719, guid: 006c6ca635b7ace4a8e3d45f24f3bb33,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 1252681645193765719, guid: 006c6ca635b7ace4a8e3d45f24f3bb33,
+        type: 3}
     - target: {fileID: 1285090248480512061, guid: 006c6ca635b7ace4a8e3d45f24f3bb33,
         type: 3}
       propertyPath: serializationData.Prefab
@@ -16154,6 +17162,12 @@ PrefabInstance:
       propertyPath: _syncMethod
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2607121790969900326, guid: 006c6ca635b7ace4a8e3d45f24f3bb33,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 2607121790969900326, guid: 006c6ca635b7ace4a8e3d45f24f3bb33,
+        type: 3}
     - target: {fileID: 2616901451666477296, guid: 006c6ca635b7ace4a8e3d45f24f3bb33,
         type: 3}
       propertyPath: m_RootOrder
@@ -16557,6 +17571,11 @@ PrefabInstance:
       propertyPath: _syncMethod
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4157940462945062291, guid: 006c6ca635b7ace4a8e3d45f24f3bb33,
+        type: 3}
+      propertyPath: worldParent
+      value: 
+      objectReference: {fileID: 5444762579523417440}
     - target: {fileID: 4157940462945062291, guid: 006c6ca635b7ace4a8e3d45f24f3bb33,
         type: 3}
       propertyPath: serializationData.Prefab
@@ -17088,7 +18107,7 @@ PrefabInstance:
     - target: {fileID: 5619302205999452442, guid: 006c6ca635b7ace4a8e3d45f24f3bb33,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5619302205999452442, guid: 006c6ca635b7ace4a8e3d45f24f3bb33,
         type: 3}
@@ -17669,6 +18688,17 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 7755062424984651060, guid: 006c6ca635b7ace4a8e3d45f24f3bb33,
+        type: 3}
+    - target: {fileID: 7802821805342609829, guid: 006c6ca635b7ace4a8e3d45f24f3bb33,
+        type: 3}
+      propertyPath: startingPlate
+      value: 
+      objectReference: {fileID: 255781044}
+    - target: {fileID: 7802821805342609829, guid: 006c6ca635b7ace4a8e3d45f24f3bb33,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7802821805342609829, guid: 006c6ca635b7ace4a8e3d45f24f3bb33,
         type: 3}
     - target: {fileID: 7835160615280721799, guid: 006c6ca635b7ace4a8e3d45f24f3bb33,
         type: 3}
@@ -18394,7 +19424,7 @@ Transform:
   m_LocalScale: {x: 5, y: 0.1, z: 5}
   m_Children: []
   m_Father: {fileID: 5444762579523417440}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4257905176380830194
 MeshFilter:

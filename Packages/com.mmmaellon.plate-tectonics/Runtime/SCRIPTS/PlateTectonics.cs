@@ -7,42 +7,30 @@ using Cyan.PlayerObjectPool;
 using UnityEngine.UIElements;
 using VRC.Udon.Common;
 
-namespace MMMaellon
+namespace MMMaellon.PlateTectonics
 {
     public class PlateTectonics : CyanPlayerObjectPoolEventListener
     {
-        public CharacterController character;
+        public PlayerCollisionDetection collision;
         public TectonicPlate startingPlate;
-        public TMPro.TextMeshPro recalibrationMessage;
-        public bool allowRecalibration = true;
-        public KeyCode recalibrationShortcut = KeyCode.Tab;
-        public float recalibrationActivationDelay = 2f;
-        public float reclaibrationActivationAngle = 15f;
-
-        public bool forceUprightPlayers = true;
-
-        public bool useGlobalTransformsWhileInAir = true;
-
-        Color dimMessageColor;
-        Color brightMessageColor;
-
-        VRCPlayerApi localPlayerAPI;
+        public Transform worldParent;
+        [System.NonSerialized]
+        public string worldParentName;
+        [System.NonSerialized]
+        public VRCPlayerApi localPlayerAPI;
+        Vector3 worldStartPos;
         public void Start()
         {
+            worldParentName = GetFullPath(worldParent);
             localPlayerAPI = Networking.LocalPlayer;
-            if (Utilities.IsValid(recalibrationMessage))
-            {
-                dimMessageColor = recalibrationMessage.color;
-                dimMessageColor.a = 0.1f;
-                brightMessageColor = recalibrationMessage.color;
-            }
+            worldStartPos = worldParent.position;
         }
 
         public void AttachToStartingPlate()
         {
             if (Utilities.IsValid(startingPlate))
             {
-                localPlayer.attachment.parentTransformName = startingPlate.transformName;
+                localPlayer.attachment.SetParent(startingPlate.transformName);
             }
         }
 
@@ -52,31 +40,31 @@ namespace MMMaellon
             if (Utilities.IsValid(player) && player.isLocal && Utilities.IsValid(localPlayer))
             {
                 respawn = true;
-                // _playerRetainedVelocity = Vector3.zero;
-                // transform.position = localPlayerAPI.GetPosition();
-                // transform.rotation = localPlayerAPI.GetRotation();
-                // AttachToStartingPlate();
                 SendCustomEventDelayedFrames(nameof(SitInChairDelayed), 1, VRC.Udon.Common.Enums.EventTiming.LateUpdate);
             }
         }
         public void SitInChairDelayed()
         {
             AttachToStartingPlate();
-            transform.position = localPlayerAPI.GetPosition();
-            transform.rotation = localPlayerAPI.GetRotation();
-            _playerRetainedVelocity = Vector3.zero;
+            localPlayer.transform.position = localPlayerAPI.GetPosition();
+            localPlayer.transform.rotation = localPlayerAPI.GetRotation();
+            attachment.startTransform.position = localPlayerAPI.GetPosition();
+            attachment.startTransform.rotation = localPlayerAPI.GetRotation();
+            worldParent.position = worldStartPos;
+            localPlayerAPI.TeleportTo(localPlayer.transform.position, localPlayer.transform.rotation);
             SendCustomEventDelayedFrames(nameof(SitInChair), 1, VRC.Udon.Common.Enums.EventTiming.Update);
         }
         public void SitInChair()
         {
             AttachToStartingPlate();
-            transform.position = localPlayerAPI.GetPosition();
-            transform.rotation = localPlayerAPI.GetRotation();
-            _playerRetainedVelocity = Vector3.zero;
-            localPlayer.transform.localPosition = Vector3.zero;
-            localPlayer.transform.localRotation = Quaternion.identity;
+            localPlayer.transform.position = localPlayerAPI.GetPosition();
+            localPlayer.transform.rotation = localPlayerAPI.GetRotation();
+            attachment.startTransform.position = localPlayerAPI.GetPosition();
+            attachment.startTransform.rotation = localPlayerAPI.GetRotation();
+            localPlayer.chair.PlayerMobility = VRCStation.Mobility.Mobile;
             localPlayer.chair.UseStation(localPlayerAPI);
             respawn = false;
+            localPlayer.RequestSerialization();
         }
 
         public override void _OnLocalPlayerAssigned()
@@ -85,40 +73,22 @@ namespace MMMaellon
         }
 
         [System.NonSerialized]
-        public PlateTectonicsPlayerSync localPlayer;
+        public PlayerSync localPlayer;
 
         [System.NonSerialized]
-        public PlateTectonicsPlayerAttachment attachment;
-        PlateTectonicsPlayerSync tempPlayer;
-        float runSpeed;
-        float walkSpeed;
-        float strafeSpeed;
-        float jumpSpeed;
+        public PlayerAttachmentSync attachment;
         public override void _OnPlayerAssigned(VRCPlayerApi player, int poolIndex, UdonBehaviour poolObject)
         {
-            tempPlayer = poolObject.GetComponent<PlateTectonicsPlayerSync>();
-            tempPlayer.attachment.plateTectonics = this;
             if (Utilities.IsValid(player) && player.isLocal)
             {
-                transform.position = localPlayerAPI.GetPosition();
-                transform.rotation = localPlayerAPI.GetRotation();
+                localPlayer = poolObject.GetComponent<PlayerSync>();
+                localPlayer.transform.position = localPlayerAPI.GetPosition();
+                localPlayer.transform.rotation = localPlayerAPI.GetRotation();
 
-                localPlayer = tempPlayer;
+                collision.transform.SetParent(localPlayer.transform);
+                collision.transform.localPosition = Vector3.zero;
+                collision.transform.localRotation = Quaternion.identity;
 
-                runSpeed = localPlayerAPI.GetRunSpeed();
-                walkSpeed = localPlayerAPI.GetWalkSpeed();
-                strafeSpeed = localPlayerAPI.GetStrafeSpeed();
-                jumpSpeed = localPlayerAPI.GetJumpImpulse();
-                localPlayerAPI.SetRunSpeed(0);
-                localPlayerAPI.SetWalkSpeed(0);
-                localPlayerAPI.SetStrafeSpeed(0);
-                localPlayerAPI.SetJumpImpulse(0);
-
-                localPlayer.transform.SetParent(transform, false);
-                localPlayer.transform.localPosition = Vector3.zero;
-                localPlayer.transform.localRotation = Quaternion.identity;
-                // localPlayer.SitInChairDelayed();
-                // localPlayer.SendCustomEventDelayedSeconds("SitInChairDelayed", 2);//delay to hopefully fix the bug that happens when you get into the chair before your avatar loads
                 SendCustomEventDelayedSeconds(nameof(SitInChair), 1, VRC.Udon.Common.Enums.EventTiming.Update);//1 second delay is arbitrarily picked but it helps fix bugs
 
                 attachment = localPlayer.attachment;
@@ -131,365 +101,87 @@ namespace MMMaellon
 
         }
 
-        bool jump;
-        public override void InputJump(bool value, UdonInputEventArgs args)
-        {
-            jump = value;
-        }
-
-        public override void InputMoveVertical(float value, UdonInputEventArgs args)
-        {
-            input.y = value;
-        }
-        public override void InputMoveHorizontal(float value, UdonInputEventArgs args)
-        {
-            input.x = value;
-        }
-        [System.NonSerialized]
-        public bool snapTurn = false;
-        [System.NonSerialized]
-        bool turned = false;
-        float lookH;
-        public override void InputLookHorizontal(float value, UdonInputEventArgs args)
-        {
-            // base.InputMoveHorizontal(value, args);
-            if (snapTurn)
-            {
-                if (!turned && value < 0.5f)
-                {
-                    turned = true;
-                }
-                else
-                {
-                    if (value < -0.5f)
-                    {
-                        lookH = -1f;
-                        turned = true;
-                    }
-                    else if (value > 0.5f)
-                    {
-                        lookH = 1f;
-                        turned = true;
-                    }
-                    else
-                    {
-                        lookH = 0f;
-                    }
-                }
-            }
-            else
-            {
-                lookH = value;
-            }
-        }
-
         Vector3 plateInfluence;
-        Vector2 input;
-        Vector3 moveInfluence;
-        Vector3 playerForward;
-        Quaternion moveRotation;
-
-        Vector3 _playerRetainedVelocity;
-        Vector3 STICK_TO_GROUND_FORCE = new Vector3(0, -2f, 0);
-        private const float RATE_OF_AIR_ACCELERATION = 5f;
-        Vector2 speed;
-        Vector3 localVelocity;
-        Vector3 maxAc;
-        Vector3 minAc;
-        Vector3 inputAcceleration;
-        bool coyoteGrounded = false;
-        float coyoteTime = 0.1f;
-        float lastGrounded = 0;
-        Transform lastTransform;
-        bool parentTransformChanged;
-        bool freeMovement;
-        VRCPlayerApi.TrackingData headData;
-        Vector3 headOffset;
-        Vector3 playerAPIHeadOffset;
-        float lastNonCalibrate;
         public void FixedUpdate()
         {
-            //Stolen from client sim
             if (!Utilities.IsValid(localPlayer) || respawn)
             {
                 return;
             }
+            
             Physics.SyncTransforms();
-            speed = GetSpeed();
-            parentTransformChanged = lastTransform != attachment.parentTransform;
-            headData = localPlayerAPI.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
-            playerForward = headData.rotation * Vector3.forward;
-            playerForward.y = 0;
-            if (playerForward.magnitude <= 0)
-            {
-                playerForward = transform.rotation * Vector3.forward;
-            }
-
-            moveRotation = Quaternion.FromToRotation(Vector3.forward, playerForward);
-
-            // Always move along the camera forward as it is the direction that it being aimed at
-            moveInfluence = input.y * speed.x * (moveRotation * Vector3.forward) + input.x * speed.y * (moveRotation * Vector3.right);
-
-
-            if (localPlayerAPI.IsUserInVR())
-            {
-                headOffset = headData.position - transform.position;
-                headOffset.y = 0;
-                moveInfluence += headOffset / Time.fixedDeltaTime;
-                playerAPIHeadOffset = headData.position - localPlayerAPI.GetPosition();
-                playerAPIHeadOffset.y = 0;
-                localPlayer.transform.position = transform.position - playerAPIHeadOffset;
-            }
-
-            //calc coyote time
-            if (character.isGrounded)
-            {
-                lastGrounded = Time.timeSinceLevelLoad;
-            }
-            coyoteGrounded = (character.isGrounded || (coyoteGrounded && (lastGrounded + coyoteTime > Time.timeSinceLevelLoad) && !jump)) && !parentTransformChanged;
-            // if (useGlobalTransformsWhileInAir && !coyoteGrounded && lastGrounded + coyoteTime <= Time.timeSinceLevelLoad && attachment.parentTransformName != "")
-            // {
-            //     attachment.parentTransformName = "";
-            // }
-
-            if (coyoteGrounded && !parentTransformChanged)
+            if (localPlayerAPI.IsPlayerGrounded())
             {
                 calcPlateInfluence();
-                _playerRetainedVelocity = moveInfluence + plateInfluence;
-                if (jump)
-                {
-                    _playerRetainedVelocity.y += jumpSpeed;
-                }
-                else if(character.isGrounded)//ignore coyote time and only stick if actually grounded
-                {
-                    _playerRetainedVelocity += STICK_TO_GROUND_FORCE;
-                }
-            }
-            else
-            {
+            } else if (plateInfluence.magnitude > 0) {
+                localPlayerAPI.SetVelocity(localPlayerAPI.GetVelocity() + plateInfluence);
                 plateInfluence = Vector3.zero;
-                // Slowly add velocity from movement inputs
-                localVelocity = Quaternion.Inverse(moveRotation) * character.velocity;
-                localVelocity.x = Mathf.Clamp(localVelocity.x, -speed.y, speed.y);
-                localVelocity.z = Mathf.Clamp(localVelocity.z, -speed.x, speed.x);
+            }
 
-                maxAc = new Vector3(speed.y - localVelocity.x, 0, speed.x - localVelocity.z);
-                minAc = new Vector3(-speed.y - localVelocity.x, 0, -speed.x - localVelocity.z);
+            worldParent.Translate(-1 * plateInfluence * Time.fixedDeltaTime);
+            localPlayer.transform.position = localPlayerAPI.GetPosition();
+            localPlayer.transform.rotation = localPlayerAPI.GetRotation();
 
-                inputAcceleration = Time.fixedDeltaTime * RATE_OF_AIR_ACCELERATION * new Vector3(input.x * speed.y, 0, input.y * speed.x);
-                inputAcceleration.x = Mathf.Clamp(inputAcceleration.x, minAc.x, maxAc.x);
-                inputAcceleration.z = Mathf.Clamp(inputAcceleration.z, minAc.z, maxAc.z);
-
-                _playerRetainedVelocity += moveRotation * inputAcceleration + Time.fixedDeltaTime * Physics.gravity;
-            }
-            freeMovement = !coyoteGrounded || moveInfluence.magnitude > 0 || jump || parentTransformChanged || Vector3.Distance(localPlayer._syncedPos, localPlayer.localPosition) > 0.1f;
-            character.Move(_playerRetainedVelocity * Time.fixedDeltaTime);
-            // localPlayerAPI.SetVelocity(_playerRetainedVelocity);
-            // character.Move((localPlayerAPI.GetPosition() - transform.position) * Time.fixedDeltaTime);
-            if (freeMovement)
+            if (localPlayerAPI.GetVelocity().magnitude > 0.001f || !localPlayerAPI.IsPlayerGrounded() || Vector3.Distance(attachment.startTransform.position, localPlayerAPI.GetPosition()) > 0.005f)
             {
-                localPlayer.endTransform.position = transform.position;
+                attachment.startTransform.position = localPlayerAPI.GetPosition();
+                attachment.startTransform.rotation = localPlayerAPI.GetRotation();
             }
-            else
-            {
-                if (Vector3.Distance(localPlayer.endTransform.position, transform.position) > 0.001f)//stops random slipping
-                {
-                    localPlayer.endTransform.position = transform.position;
-                }
-            }
-            HandleRotation();
-            RecordTransforms();
-            lastGlobalPos = localPlayer.endTransform.position;
-            lastGlobalRot = localPlayer.endTransform.rotation;
-            // jump = false;
-            lastTransform = attachment.parentTransform;
-
-            //recalibration
-            if (!allowRecalibration)
-            {
-                //do nothing
-                if (Utilities.IsValid(recalibrationMessage))
-                {
-                    recalibrationMessage.gameObject.SetActive(false);
-                }
-            }
-            else if (!localPlayerAPI.IsUserInVR())
-            {
-                if (Utilities.IsValid(recalibrationMessage))
-                {
-                    recalibrationMessage.gameObject.SetActive(false);
-                }
-
-                if (Input.GetKeyDown(recalibrationShortcut))
-                {
-                    Recalibrate();
-                }
-            }
-            else if (Vector3.Angle(headData.rotation * Vector3.forward, Vector3.down) > reclaibrationActivationAngle)
-            {
-                lastNonCalibrate = Time.timeSinceLevelLoad;
-                if (Utilities.IsValid(recalibrationMessage))
-                {
-                    recalibrationMessage.color = dimMessageColor;
-                }
-            }
-            else if (lastNonCalibrate + recalibrationActivationDelay < Time.timeSinceLevelLoad)
-            {
-                lastNonCalibrate = Time.timeSinceLevelLoad;
-                Recalibrate();
-            }
-            else
-            {
-                if (Utilities.IsValid(recalibrationMessage))
-                {
-                    brightMessageColor.a = Mathf.Sin((Time.timeSinceLevelLoad - lastNonCalibrate) * 8) * 0.5f + 0.5f;
-                    recalibrationMessage.color = brightMessageColor;
-                }
-            }
+            
+            CheckSync();
         }
 
-        Vector3 lastGlobalPos;
-        Quaternion lastGlobalRot;
-        bool justLanded;
         public void calcPlateInfluence()
         {
-            if (!Utilities.IsValid(attachment.parentTransform) || !coyoteGrounded || jump)
-            {
-                plateInfluence = Vector3.zero;
-                justLanded = true;
-            }
-            else if (!justLanded)
-            {
-                // transform.rotation *= Quaternion.Inverse(lastGlobalRot) * (attachment.parentTransform.rotation * localPlayer._localRotation);
-                // plateInfluence = (attachment.parentTransform.position + (attachment.parentTransform.rotation * localPlayer._localPosition) - lastGlobalPos) / Time.fixedDeltaTime;
-                transform.rotation *= Quaternion.Inverse(lastGlobalRot) * localPlayer.endTransform.rotation;
-                plateInfluence = (localPlayer.endTransform.position - lastGlobalPos) / Time.fixedDeltaTime;
-            }
-            else
-            {
-                justLanded = false;
-                plateInfluence = Vector3.zero;
-            }
+            plateInfluence = (localPlayer.attachment.startTransform.position - localPlayer.transform.position) / Time.fixedDeltaTime;
         }
-        float dif;
-        float inputLookX;
 
-        public void HandleRotation()
+        public void CheckSync()
         {
-            if (localPlayerAPI.IsUserInVR())
-            {
-                if (snapTurn)
-                {
-                    if (lookH < -0.5f)
-                    {
-                        transform.Rotate(Vector3.up * 30f);
-                    }
-                    else if (lookH > 0.5f)
-                    {
-                        transform.Rotate(Vector3.up * -30f);
-                    }
-                    lookH = 0;
-                }
-                else
-                {
-                    transform.Rotate(Vector3.up * lookH * 90f * 1.35f * Time.fixedDeltaTime);
-                }
-            }
-            else
-            {
-                //Code shared by Centauri
-                dif = Vector3.Dot(playerForward.normalized, transform.right);
-                inputLookX = Input.GetAxisRaw("Mouse X");
-
-                if (Mathf.Abs(dif) >= 0.89f && Mathf.Sign(dif) == Mathf.Sign(inputLookX))
-                {
-                    transform.localEulerAngles += 1.35f * inputLookX * Vector3.up;
-                }
-            }
-            if (forceUprightPlayers)
-            {
-                transform.rotation = Quaternion.FromToRotation(transform.rotation * Vector3.up, Vector3.up) * transform.rotation;
-            }
-            localPlayer.endTransform.rotation = transform.rotation;
+            localPlayer.needSync = localPlayer.needSync || Vector3.Angle(attachment.endTransform.rotation * Vector3.forward, localPlayer.transform.rotation * Vector3.forward) > 10f;                                             //check rotation
+            localPlayer.needSync = localPlayer.needSync || (attachment.endVelTransform.localPosition.y >= 0 && attachment.startVelTransform.localPosition.y < -0.01f) || Vector3.Distance(attachment.endVelTransform.localPosition, attachment.startVelTransform.localPosition) > 0.1f;                                         //check velocity
+            localPlayer.needSync = localPlayer.needSync || Vector3.Distance(localPlayer.transform.position, attachment.endTransform.position + (attachment.endVelTransform.position - attachment.transform.position) * (Time.timeSinceLevelLoad - localPlayer.syncTime)) > 0.1f; //check position
         }
 
-        Vector3 oldPos;
-        Vector3 oldVel;
-        bool rotChanged = false;
-        bool velChanged = false;
-        bool posChanged = false;
-        public void RecordTransforms()
+        public string GetFullPath(Transform target)
         {
-            // Physics.SyncTransforms();
-            oldPos = localPlayer._localPosition;
-            oldVel = localPlayer._velocity;
-            localPlayer.localPosition = localPlayer.endTransform.localPosition;
-            localPlayer.localRotation = localPlayer.endTransform.localRotation;
-            if (Utilities.IsValid(attachment.parentTransform))
+            Transform pathBuilder = target;
+            string tempName = "";
+            while (Utilities.IsValid(pathBuilder))
             {
-                if (!parentTransformChanged)
-                {
-                    localPlayer.velocity = (localPlayer._localPosition - oldPos) / Time.fixedDeltaTime;
-                }
-                else
-                {
-                    localPlayer.velocity = (localPlayer._localPosition - ((Quaternion.Inverse(attachment.parentTransform.rotation) * lastGlobalPos) - attachment.parentTransform.position)) / Time.fixedDeltaTime;
-                }
-            } else
-            {
-                localPlayer.velocity = character.velocity;
+                tempName = "/" + pathBuilder.name + tempName;
+                pathBuilder = pathBuilder.parent;
             }
-            localPlayer.needSync = localPlayer.needSync || Vector3.Angle(localPlayer._syncedRot * Vector3.forward, localPlayer._localRotation * Vector3.forward) > 10f;                                             //check rotation
-            localPlayer.needSync = localPlayer.needSync || (localPlayer._syncedVel.y >= 0 && oldVel.y < -0.01f) || Vector3.Distance(localPlayer._syncedVel, oldVel) > 0.1f;                                         //check velocity
-            localPlayer.needSync = localPlayer.needSync || Vector3.Distance(localPlayer._localPosition, localPlayer._syncedPos + localPlayer._syncedVel * (Time.timeSinceLevelLoad - localPlayer.syncTime)) > 0.1f; //check position
-
-            // Debug.LogWarning("pos changed " + Vector3.Distance(localPlayer._localPosition, localPlayer._syncedPos + localPlayer._syncedVel * (Time.timeSinceLevelLoad - localPlayer.syncTime)));
+            return tempName;
         }
-
         TectonicPlate hitPlate;
 
-        public void OnTriggerEnter(Collider hit)
+        public void OnPlateStay(Collider hit)
         {
-            if (!Utilities.IsValid(hit) || !Utilities.IsValid(localPlayer))
+            if (!Utilities.IsValid(hit) || !Utilities.IsValid(localPlayer) || !localPlayerAPI.IsPlayerGrounded())
             {
                 return;
             }
             hitPlate = hit.GetComponent<TectonicPlate>();
-            if (!Utilities.IsValid(hitPlate))
+            if (!Utilities.IsValid(hitPlate) || attachment.plateName == hitPlate.transformName)
             {
                 return;
             }
-            localPlayer.attachment.parentTransformName = hitPlate.transformName;
+            attachment.SetParent(hitPlate.transformName);
         }
-        public void OnTriggerExit(Collider hit)
+        public void OnPlateExit(Collider hit)
         {
-            if (!useGlobalTransformsWhileInAir || !Utilities.IsValid(hit) || !Utilities.IsValid(attachment))
+            if (!Utilities.IsValid(hit) || !Utilities.IsValid(attachment))
             {
                 return;
             }
             hitPlate = hit.GetComponent<TectonicPlate>();
-            if (!Utilities.IsValid(hitPlate) || hitPlate.transformName != attachment.parentTransformName)
+            if (!Utilities.IsValid(hitPlate) || hitPlate.transformName != attachment.plateName)
             {
                 return;
             }
-            attachment.parentTransformName = "";
+            attachment.SetParent(worldParentName);
         }
 
-
-        private Vector2 GetSpeed()
-        {
-            // TODO check current bindings to see if non keyboard and only use runspeed.
-            Vector2 speed = new Vector2(
-                localPlayerAPI.IsUserInVR() || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) ? runSpeed : walkSpeed,
-                strafeSpeed);
-
-            return speed;
-        }
-
-        public void Recalibrate()
-        {
-            localPlayerAPI.TeleportTo(localPlayerAPI.GetPosition(), localPlayerAPI.GetRotation());
-            SitInChair();
-        }
     }
 }

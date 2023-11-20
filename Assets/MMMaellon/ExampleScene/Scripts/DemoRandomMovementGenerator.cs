@@ -16,7 +16,7 @@ public class DemoRandomMovementGenerator : UdonSharpBehaviour
         }
         else
         {
-            // transform.position = new Vector3(Random.Range(-randomRange * 10f, randomRange * 10f), transform.position.y, Random.Range(-randomRange * 10f, randomRange * 10f));
+            // transform.localPosition = new Vector3(Random.Range(-randomRange * 10f, randomRange * 10f), transform.localPosition.y, Random.Range(-randomRange * 10f, randomRange * 10f));
         }
     }
     public Transform debugObj;
@@ -38,10 +38,10 @@ public class DemoRandomMovementGenerator : UdonSharpBehaviour
             {
                 if (!startSetPos)
                 {
-                    transform.position = value;
+                    transform.localPosition = value;
                     startSetPos = true;
                 }
-                startPosCorrection = value - transform.position;
+                startPosCorrection = value - transform.localPosition;
             }
         }
     }
@@ -58,10 +58,10 @@ public class DemoRandomMovementGenerator : UdonSharpBehaviour
             {
                 if (!startSetRot)
                 {
-                    transform.rotation = value;
+                    transform.localRotation = value;
                     startSetRot = true;
                 }
-                startRotCorrection = value * Quaternion.Inverse(transform.rotation);
+                startRotCorrection = value * Quaternion.Inverse(transform.localRotation);
             }
         }
     }
@@ -76,7 +76,8 @@ public class DemoRandomMovementGenerator : UdonSharpBehaviour
             lastTargetSwitch = Time.timeSinceLevelLoad;
             if (Utilities.IsValid(debugObj))
             {
-                debugObj.transform.position = value;
+                debugObj.SetParent(transform.parent);
+                debugObj.transform.localPosition = value;
             }
         }
     }
@@ -95,7 +96,9 @@ public class DemoRandomMovementGenerator : UdonSharpBehaviour
         {
             return;
         }
-        currDistance = Vector3.Distance(transform.parent.TransformPoint(targetPos), transform.position);
+        // currDistance = Vector3.Distance(transform.parent.TransformPoint(targetPos), transform.localPosition);
+        currDistance = Vector3.Distance(targetPos, transform.localPosition);
+        // currAngle = Vector3.SignedAngle(Vector3.forward, transform.InverseTransformPoint(transform.parent.TransformPoint(targetPos)), Vector3.up);
         currAngle = Vector3.SignedAngle(Vector3.forward, transform.InverseTransformPoint(transform.parent.TransformPoint(targetPos)), Vector3.up);
         if (lastTargetSwitch + 2f > Time.timeSinceLevelLoad)
         {
@@ -104,7 +107,7 @@ public class DemoRandomMovementGenerator : UdonSharpBehaviour
         }
         else
         {
-            acceleration = Mathf.Clamp01(Time.timeSinceLevelLoad - (lastTargetSwitch + 2f)) * (transform.rotation * Vector3.forward * Mathf.Pow((45f - Mathf.Clamp(Mathf.Abs(currAngle), 0, 45)) / 45f, 2) * Mathf.Clamp(currDistance / 3, 0, 15) * 5 - rigid.velocity * 2) * Time.deltaTime;
+            acceleration = Mathf.Clamp01(Time.timeSinceLevelLoad - (lastTargetSwitch + 2f)) * (transform.localRotation * Vector3.forward * Mathf.Pow((45f - Mathf.Clamp(Mathf.Abs(currAngle), 0, 45)) / 45f, 2) * Mathf.Clamp(currDistance / 3, 0, 15) * 5 - rigid.velocity * 2) * Time.deltaTime;
             angularAcceleration = Mathf.Clamp01(Time.timeSinceLevelLoad - (lastTargetSwitch + 2f)) * (Vector3.up * Mathf.Lerp(-1f, 1f, Mathf.Pow(currAngle / 180f * 8, 3) + 0.5f) * 2 - rigid.angularVelocity * 5) * Time.deltaTime;
         }
 
@@ -142,15 +145,15 @@ public class DemoRandomMovementGenerator : UdonSharpBehaviour
 
         lastDistance = currDistance;
         lastAngle = currAngle;
-        startPos = transform.position;
-        startRot = transform.rotation;
+        startPos = transform.localPosition;
+        startRot = transform.localRotation;
 
 
     }
     float lastTargetSwitch;
     public void SetNewTarget()
     {
-        targetPos = new Vector3(Random.Range(-randomRange, randomRange), transform.position.y, Random.Range(-randomRange, randomRange));
+        targetPos = new Vector3(Random.Range(-randomRange, randomRange), transform.localPosition.y, Random.Range(-randomRange, randomRange));
         RequestSerialization();
     }
 }

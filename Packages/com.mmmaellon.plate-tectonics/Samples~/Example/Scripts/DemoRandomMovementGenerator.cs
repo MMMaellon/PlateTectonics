@@ -5,76 +5,155 @@ using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
 
+[UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
 public class DemoRandomMovementGenerator : UdonSharpBehaviour
 {
     void Start()
     {
-        enabled = Networking.LocalPlayer.isMaster;//have the instance owner sync to everyone else. No one else runs this script
-        SetNewTarget();
-        SpinToFaceTarget();
-        firstFrameAfterMove = true;
+        if (Networking.LocalPlayer.IsOwner(gameObject))
+        {
+            SetNewTarget();
+        }
+        else
+        {
+            // transform.localPosition = new Vector3(Random.Range(-randomRange * 10f, randomRange * 10f), transform.localPosition.y, Random.Range(-randomRange * 10f, randomRange * 10f));
+        }
     }
-    public SmartObjectSync sync;
-    Vector3 targetPos = Vector3.zero;
+    public Transform debugObj;
+    public Rigidbody rigid;
+    [UdonSynced, FieldChangeCallback(nameof(targetPos))]
+    Vector3 _targetPos = Vector3.zero;
+    [UdonSynced, FieldChangeCallback(nameof(startPos))]
+    Vector3 _startPos = Vector3.zero;
+    Vector3 startPosCorrection = Vector3.zero;
+    bool startSetPos;
+    bool startSetRot;
+    public Vector3 startPos
+    {
+        get => _startPos;
+        set
+        {
+            _startPos = value;
+            if(!Networking.LocalPlayer.IsOwner(gameObject))
+            {
+                if (!startSetPos)
+                {
+                    transform.localPosition = value;
+                    startSetPos = true;
+                }
+                startPosCorrection = value - transform.localPosition;
+            }
+        }
+    }
+    [UdonSynced, FieldChangeCallback(nameof(startRot))]
+    Quaternion _startRot;
+    Quaternion startRotCorrection = Quaternion.identity;
+    public Quaternion startRot
+    {
+        get => _startRot;
+        set
+        {
+            _startRot = value;
+            if(!Networking.LocalPlayer.IsOwner(gameObject))
+            {
+                if (!startSetRot)
+                {
+                    transform.localRotation = value;
+                    startSetRot = true;
+                }
+                startRotCorrection = value * Quaternion.Inverse(transform.localRotation);
+            }
+        }
+    }
+    public Vector3 targetPos
+    {
+        get => _targetPos;
+        set
+        {
+            _targetPos = value;
+            lastDistance = -1001f;
+            lastAngle = -1001f;
+            lastTargetSwitch = Time.timeSinceLevelLoad;
+            if (Utilities.IsValid(debugObj))
+            {
+                debugObj.SetParent(transform.parent);
+                debugObj.transform.localPosition = value;
+            }
+        }
+    }
     float lastDistance = -1001f;
     float currDistance = -1001f;
     float lastAngle = -1001f;
     float currAngle = -1001f;
     public float randomRange = 20f;
-
-    bool firstFrameAfterMove = true;
-    bool turning = false;
+    Vector3 acceleration;
+    Vector3 angularAcceleration;
+    Vector3 axis;
+    float angle;
     public void Update()
     {
-        currDistance = Vector3.Distance(transform.parent.TransformPoint(targetPos), sync.rigid.position);
-        currAngle = Vector3.SignedAngle(Vector3.forward, sync.transform.InverseTransformPoint(transform.parent.TransformPoint(targetPos)), Vector3.up);
-        if (firstFrameAfterMove)
+        if (!Utilities.IsValid(Networking.LocalPlayer))
         {
-            firstFrameAfterMove = false;
+            return;
         }
-        else if (turning)
+        // currDistance = Vector3.Distance(transform.parent.TransformPoint(targetPos), transform.localPosition);
+        currDistance = Vector3.Distance(targetPos, transform.localPosition);
+        // currAngle = Vector3.SignedAngle(Vector3.forward, transform.InverseTransformPoint(transform.parent.TransformPoint(targetPos)), Vector3.up);
+        currAngle = Vector3.SignedAngle(Vector3.forward, transform.InverseTransformPoint(transform.parent.TransformPoint(targetPos)), Vector3.up);
+        if (lastTargetSwitch + 2f > Time.timeSinceLevelLoad)
         {
-            if (Mathf.Abs(currAngle) > Mathf.Abs(lastAngle))
+            acceleration = Vector3.zero;
+            angularAcceleration = Vector3.zero;
+        }
+        else
+        {
+            acceleration = Mathf.Clamp01(Time.timeSinceLevelLoad - (lastTargetSwitch + 2f)) * (transform.localRotation * Vector3.forward * Mathf.Pow((45f - Mathf.Clamp(Mathf.Abs(currAngle), 0, 45)) / 45f, 2) * Mathf.Clamp(currDistance / 3, 0, 15) * 5 - rigid.velocity * 2) * Time.deltaTime;
+            angularAcceleration = Mathf.Clamp01(Time.timeSinceLevelLoad - (lastTargetSwitch + 2f)) * (Vector3.up * Mathf.Lerp(-1f, 1f, Mathf.Pow(currAngle / 180f * 8, 3) + 0.5f) * 2 - rigid.angularVelocity * 5) * Time.deltaTime;
+        }
+
+
+
+        if (Networking.LocalPlayer.IsOwner(gameObject))
+        {
+            if (lastDistance > 0 && currDistance < 5f)
             {
-                MoveTowardsTarget();
-                firstFrameAfterMove = true;
+                SetNewTarget();
             }
         }
         else
         {
-            if (currDistance > lastDistance)
+            //corrections
+            if (startPosCorrection.magnitude > 0)
             {
-                SetNewTarget();
-                SpinToFaceTarget();
-                firstFrameAfterMove = true;
+                acceleration += startPosCorrection * Time.deltaTime * 0.5f;
+                startPosCorrection = 0.5f * startPosCorrection;
+            }
+            startRotCorrection.ToAngleAxis(out angle, out axis);
+            if (angle > 0)
+            {
+                angularAcceleration += Mathf.Clamp(angle, -90f, 90f) * axis * Time.deltaTime * 0.5f;
+                startRotCorrection = Quaternion.Slerp(Quaternion.identity, startRotCorrection, 0.5f);
             }
         }
+
+
+
+        rigid.velocity += acceleration;
+        rigid.angularVelocity += angularAcceleration;
+
+
+
         lastDistance = currDistance;
         lastAngle = currAngle;
-    }
+        startPos = transform.localPosition;
+        startRot = transform.localRotation;
 
-    Vector3 idealVelocity;
+
+    }
+    float lastTargetSwitch;
     public void SetNewTarget()
     {
-        targetPos = Random.onUnitSphere * randomRange;
-        targetPos.y = sync.transform.localPosition.y;
-    }
-    public void SpinToFaceTarget()
-    {
-        currAngle = Vector3.SignedAngle(Vector3.forward, sync.transform.InverseTransformPoint(transform.parent.TransformPoint(targetPos)), Vector3.up);
-        sync.rigid.angularVelocity = currAngle > 0 ? Vector3.up * 0.5f : Vector3.up * -0.5f;
-        sync.rigid.velocity = Vector3.zero;
-        sync.RequestSerialization();
-        turning = true;
-    }
-
-    public void MoveTowardsTarget()
-    {
-        idealVelocity = transform.parent.TransformPoint(targetPos) - sync.rigid.position;
-        currDistance = Vector3.Distance(transform.parent.TransformPoint(targetPos), sync.rigid.position);
-        sync.rigid.angularVelocity = Vector3.zero;
-        sync.rigid.velocity = Vector3.Normalize(idealVelocity) * 3;
-        sync.RequestSerialization();
-        turning = false;
+        targetPos = new Vector3(Random.Range(-randomRange, randomRange), transform.localPosition.y, Random.Range(-randomRange, randomRange));
+        RequestSerialization();
     }
 }

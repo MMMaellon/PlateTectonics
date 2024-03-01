@@ -17,7 +17,7 @@
     },
     "legacyFiles": {},
     "legacyPackages": [],
-    "unity": ">=2019.4",
+    "unity": "2019.4",
     "samples": [
         {
             "displayName": "Plate Tectonics Example Scene",

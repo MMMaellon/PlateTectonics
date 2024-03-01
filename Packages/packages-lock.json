@@ -6,12 +6,6 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "com.mmmaellon.plate-tectonics": {
-      "version": "file:com.mmmaellon.plate-tectonics",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "com.mmmaellon.smartobjectsync": {
       "version": "file:com.mmmaellon.smartobjectsync",
       "depth": 0,

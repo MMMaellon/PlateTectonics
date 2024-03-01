@@ -1,7 +1,7 @@
 {
     "name": "com.mmmaellon.plate-tectonics",
     "displayName": "Plate Tectonics",
-    "version": "3.0.2",
+    "version": "3.0.3",
     "description": "",
     "url": "https://github.com/MMMaellon/PlateTectonics.git",
     "dependencies": {},
@@ -17,7 +17,7 @@
     },
     "legacyFiles": {},
     "legacyPackages": [],
-    "unity": ">=2019.1.0",
+    "unity": ">=2019.4",
     "samples": [
         {
             "displayName": "Plate Tectonics Example Scene",

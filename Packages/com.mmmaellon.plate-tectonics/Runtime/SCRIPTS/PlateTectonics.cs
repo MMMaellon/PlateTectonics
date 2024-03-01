@@ -32,6 +32,10 @@ namespace MMMaellon.PlateTectonics
             {
                 localPlayer.attachment.SetParent(startingPlate.transformName);
             }
+            else
+            {
+                localPlayer.attachment.SetParent(worldParentName);
+            }
         }
 
         bool respawn = true;
@@ -108,12 +112,14 @@ namespace MMMaellon.PlateTectonics
             {
                 return;
             }
-            
+
             Physics.SyncTransforms();
             if (localPlayerAPI.IsPlayerGrounded())
             {
                 calcPlateInfluence();
-            } else if (plateInfluence.magnitude > 0) {
+            }
+            else if (plateInfluence.magnitude > 0)
+            {
                 localPlayerAPI.SetVelocity(localPlayerAPI.GetVelocity() + plateInfluence);
                 plateInfluence = Vector3.zero;
             }
@@ -127,7 +133,7 @@ namespace MMMaellon.PlateTectonics
                 attachment.startTransform.position = localPlayerAPI.GetPosition();
                 attachment.startTransform.rotation = localPlayerAPI.GetRotation();
             }
-            
+
             CheckSync();
         }
 

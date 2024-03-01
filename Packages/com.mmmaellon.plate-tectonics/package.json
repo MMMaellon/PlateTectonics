@@ -12,9 +12,12 @@
         "url": "https://twitter.com/MMMaellon"
     },
     "vpmDependencies": {
-        "com.vrchat.worlds": "^3.2.0",
+        "com.vrchat.worlds": "^3.4.0",
         "com.cyan.playerobjectpool": "^1.1.2"
     },
+    "legacyFiles": {},
+    "legacyPackages": [],
+    "unity": ">=2019.1.0",
     "samples": [
         {
             "displayName": "Plate Tectonics Example Scene",

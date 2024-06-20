@@ -2,7 +2,7 @@
     "name": "com.mmmaellon.plate-tectonics",
     "displayName": "Plate Tectonics",
     "version": "3.0.3",
-    "description": "",
+    "description": "VRChat Prefab that syncs player movement relative to the surface they're standing on ",
     "url": "https://github.com/MMMaellon/PlateTectonics.git",
     "dependencies": {},
     "gitDependencies": {},
